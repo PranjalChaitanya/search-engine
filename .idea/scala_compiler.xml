@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <option name="separateProdTestSources" value="true" />
-    <profile name="sbt 1" modules="search-engine,search-engine.main,search-engine.test" />
+    <profile name="sbt 1" modules="search-engine,search-engine_8033" />
   </component>
 </project>
