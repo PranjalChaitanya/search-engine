@@ -47,7 +47,8 @@ object HTMLTagExtractor {
               if(previousCommitedIndex != iteratingIndex) {
                 returnList = returnList :+ DOMText(html.substring(previousCommitedIndex, iteratingIndex))
               }
-
+              
+              // TODO : Why is this <a>?
               returnList = returnList :+ DOMNonVoidTag("<a>", parseHTML(html, iteratingIndex + tag.length,
                 closingTagIndex - 1), Map("A" -> "A", "B" -> "A"))
 

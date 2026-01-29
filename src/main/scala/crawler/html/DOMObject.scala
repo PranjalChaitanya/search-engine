@@ -10,8 +10,8 @@ final case class DOMVoidTag(tagType: String, attrs: Map[String, String]) extends
 type DOMTag = DOMNonVoidTag | DOMVoidTag
 
 def isVoidTag(tag: String): Boolean = {
-  val voidTags: List[String] = List("area", "base", "br", "col", "embed", "hr", "img", "input", 
-      "link", "meta", "param", "source", "tract", "wbr")
+  val voidTags: List[String] = List("<area>", "<base>", "<br>", "<col>", "<embed>", "<hr>", "<img>", "<input>",
+      "<link>", "<meta>", "<param>", "<source>", "<tract>", "<wbr>")
   
   voidTags.contains(tag)
 }

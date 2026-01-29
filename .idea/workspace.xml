@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/Executor.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/DOMObject.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTagExtractor.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/scala/html/HTMLTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/concurrency/AsyncQueue.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/concurrency/AsyncQueue.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/DOMObject.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/DOMObject.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTagExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTagExtractor.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,22 +91,11 @@
       <option name="presentableId" value="Default" />
       <updated>1769705269567</updated>
       <workItem from="1769705270882" duration="3555000" />
-      <workItem from="1769713786734" duration="8644000" />
+      <workItem from="1769713786734" duration="10340000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTagExtractor.scala</url>
-          <line>48</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
