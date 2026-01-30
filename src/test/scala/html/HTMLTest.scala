@@ -5,7 +5,10 @@ import crawler.html.{DOMObject, DOMNonVoidTag, HTMLTagExtractor}
 object HTMLTest {
   @main
   def hello() = {
-    val html: String = "<html>Hello this <p>Basic paragraph <a> ref</a></p> is basic html text</html>"
+    // Note changing <br/> to <br /> breaks it because of incorrect handling of non void
+    // TODO : Fails test case if multiple <<<<<<<
+    val html: String = "<html><br /> Hello this <p>Basic <ul><li>Deep list</li>" +
+      "</ul> paragraph <a href=\"https://gossim.com\"> ref</a></p> is basic html text</html>"
     val domObjects: List[DOMObject] = HTMLTagExtractor.parseHTML(html, 0, html.length - 1)
 
     println(domObjects.length)
