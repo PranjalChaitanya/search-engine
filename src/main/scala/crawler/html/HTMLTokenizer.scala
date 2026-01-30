@@ -1,6 +1,6 @@
 package crawler.html
 
-import crawler.html.HTMLObjectToken.{CloseTagToken, CommentToken, OpenTagToken, RawTagToken, Tag, TextToken, VoidTagToken}
+import crawler.html.HTMLObjectToken.{CloseTagToken, CommentToken, DoctypeToken, OpenTagToken, RawTagToken, Tag, TextToken, VoidTagToken}
 
 import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
@@ -21,6 +21,7 @@ object HTMLObjectToken {
   final case class VoidTagToken(tagName: String, attrs: Map[String, String]) extends Tag
 
   final case class CommentToken(comment : String) extends HTMLObjectToken
+  final case class DoctypeToken() extends HTMLObjectToken
 }
 
 // Types that are used internally to classify and return token kinds
@@ -33,15 +34,11 @@ private def tagKind(tag: String): TagKind = {
   val voidTags: List[String] = List("area", "base", "br", "col", "embed", "hr", "img", "input",
     "link", "meta", "param", "source", "tract", "wbr")
 
-  if (voidTags.contains(tag)) {
-    return VoidKind
-  }
-
-  NonVoidKind
+  if (voidTags.contains(tag)) VoidKind else NonVoidKind
 }
 
 // None return means that it's not a valid tag
-private def tagName(tag: String) : Option[String] = {
+private def extractTagName(tag: String) : Option[String] = {
   val tagRegex : Regex = """<\s*/?\s*([a-zA-Z0-9:-]*).*>""".r
 
   tagRegex.findFirstMatchIn(tag).map(_.group(1))
@@ -63,7 +60,6 @@ private def createClosedTagToken(tagName: String) : Tag = {
   CloseTagToken(tagName)
 }
 
-// TODO : bad interface that you need to pass both of these in, given that you can extract tagName from fullTag
 private def createOpenTagToken(fullTag: String, tagName: String) : Tag = {
   OpenTagToken(tagName, extractTagAttributes(fullTag))
 }
@@ -72,7 +68,7 @@ private def createVoidTagToken(fullTag: String, tagName: String) : Tag = {
   VoidTagToken(tagName, extractTagAttributes(fullTag))
 }
 
-private def createCommentToken(fullTag: String) : Option[CommentToken] = {
+private def parseCommentToken(fullTag: String) : Option[CommentToken] = {
   // comes from <!-- and -->
   val minimumCommentLength: Int = 7
 
@@ -84,42 +80,38 @@ private def createCommentToken(fullTag: String) : Option[CommentToken] = {
   None
 }
 
+private def parseDoctypeToken(tag: String) : Option[DoctypeToken] = {
+  Option.when(tag == "<!DOCTYPE html>")(DoctypeToken())
+}
+
+private def parseTagToken(fullTag: String) : Option[Tag] = {
+  extractTagName(fullTag).map(tagName => {
+    val voidOrNonVoidTagKind: TagKind = tagKind(tagName)
+
+    voidOrNonVoidTagKind match {
+      case NonVoidKind =>
+        if (fullTag.startsWith("</")) {
+          createClosedTagToken(tagName)
+        } else {
+          createOpenTagToken(fullTag, tagName)
+        }
+      case VoidKind =>
+        createVoidTagToken(fullTag, tagName)
+    }
+  })
+}
+
+private def refineRawTag(fullTag: String) : Option[HTMLObjectToken] = {
+  parseDoctypeToken(fullTag)
+    .orElse(parseCommentToken(fullTag))
+    .orElse(parseTagToken(fullTag))
+}
+
 private def refineToken(token: HTMLObjectToken) : Option[HTMLObjectToken] = {
   token match {
     // only raw tag tokens need to be refined
     case RawTagToken(tag: String) =>
-      val parsedCommentToken : Option[CommentToken] = createCommentToken(tag)
-      parsedCommentToken match {
-        case Some(token: CommentToken) =>
-          return parsedCommentToken
-        case None =>
-      }
-
-      val passedTagName : Option[String] = tagName(tag)
-
-      // checking whether this is a valid tag
-      passedTagName match {
-        case Some(tagName: String) =>
-          val voidOrNonVoidTagKind: TagKind = tagKind(tagName)
-
-          voidOrNonVoidTagKind match {
-            case NonVoidKind =>
-              val closingTagRegex : Regex = """</.*>""".r
-              val closingTagMatch : Option[Regex.Match] = closingTagRegex.findFirstMatchIn(tag)
-
-              closingTagMatch match {
-                case Some(tag: Regex.Match) =>
-                  Some(createClosedTagToken(tagName))
-                case None =>
-                  Some(createOpenTagToken(tag, tagName))
-              }
-            case VoidKind =>
-              Some(createVoidTagToken(tag, tagName))
-          }
-
-        case None =>
-          None
-      }
+      refineRawTag(tag)
     case _ =>
       Some(token)
   }
@@ -153,31 +145,14 @@ object HTMLTokenizer {
       }
     }
 
+    if(stringBuffer.nonEmpty) {
+      listBuffer += TextToken(stringBuffer.toString())
+      stringBuffer.clear()
+    }
+
     // Second phase of refining the tokens
     val refinedTokens = listBuffer.flatMap(refineToken)
 
     refinedTokens
-  }
-}
-
-object testRuns {
-  @main
-  def mainFunc = {
-//    println(isTag("</a>"))
-//    println(isTag("</h1>"))
-//    println(isTag("<h1>"))
-//    println(isTag("<br>"))
-//    println(isTag("<br/>"))
-//    println(isTag("<img src = \"fdsfdsfdsfdsfdsfsd\" />"))
-//    println(isTag("</a href = \"fsdfdsfdsfdsfdsfds\">"))
-//    println(isTag("<--/a href = \"fsdfdsfdsfdsfdsfds\"-->"))
-//    println(isTag("< fdsfdsfdsfsdfsdfdsfsd"))
-
-//    </a href = "fsdfdsfdsfdsfdsfds">
-//    println(createOpenTagToken("</a href = \"fsdfdsfdsfdsfdsfds\">", "a"))
-    println(HTMLTokenizer.tokenize("<!-- html comment --><html><br /> Hello this <p>Basic <ul><li>Deep list</li></ul> paragraph <a href=\"https://gossim.com\"> ref</a></p> is basic html text</html>"))
-//    println(HTMLTokenizer.tokenize("</html>"))
-//    println(HTMLTokenizer.tokenize("<br />"))
-//    println(HTMLTokenizer.tokenize("<a href = \"fsdfdsfdsfdsfdsfds\">"))
   }
 }

@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTokenizer.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/scala/html/FileTest.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/scala/html/Sample.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/DOMObject.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/DOMObject.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/HTMLTagExtractorSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/HTMLTagExtractorSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/HTMLTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/HTMLTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTokenizer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTokenizer.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +52,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.mainFunc">
+  <component name="RunManager" selected="ScalaTest.HTMLTokenizerSpec">
     <configuration name="hello" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="html.hello" />
       <module name="search-engine" />
@@ -127,11 +121,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HTMLTokenizerSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Class" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="html.HTMLTokenizerSpec" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="ScalaTest.HTMLTokenizerSpec" />
+        <item itemvalue="Application.run" />
         <item itemvalue="Application.mainFunc" />
         <item itemvalue="Application.hello" />
-        <item itemvalue="Application.run" />
         <item itemvalue="ScalaTest.HTMLTagExtractorSpec" />
       </list>
     </recent_temporary>
@@ -160,7 +184,7 @@
       <workItem from="1769713786734" duration="21830000" />
       <workItem from="1769742402378" duration="2246000" />
       <workItem from="1769747501572" duration="64000" />
-      <workItem from="1769793979051" duration="10920000" />
+      <workItem from="1769793979051" duration="15770000" />
     </task>
     <servers />
   </component>
