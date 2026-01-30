@@ -151,7 +151,7 @@ class HTMLTagExtractorSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "not crash on unclosed tag" in {
-    val html = "<p>hello"
+    val html = "<html><p>hello</html>"
     noException shouldBe thrownBy {
       HTMLTagExtractor.parseHTML(html, 0, html.length - 1)
     }

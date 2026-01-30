@@ -6,7 +6,7 @@ import scala.util.matching.Regex
 private def getFullTagGivenLeftBracketIndex(html: String, index: Int): Option[String] = {
   var end: Int = html.indexOf('>', index)
   if (end == -1) {
-    None
+    return None
   }
 
   if(html.charAt(end) == '/') {
@@ -26,32 +26,26 @@ private def getClosingTagGivenTag(tag: String): String = {
 // sample input: <a class = "hello" href="link">. Will return (<a>, and a map with all of the key values)
 private def extractTagMetadata(tag: String) : (String, Map[String, String]) = {
   // removes < in the front and > in the back
-//  println(tag)
-
   var innerString: String = tag.drop(1).dropRight(1)
   if(innerString.last == '/') {
     innerString = innerString.dropRight(1).trim
   }
-
-//  println(innerString)
 
   // in the example input -> ["a", "class = "hello" href="link""]
   val splitFirstItem: Array[String] = innerString.split("\\s+", 2)
 
   val attributesMap = {
     if(splitFirstItem.length == 1) {Map[String, String]()}
-    else {
-      splitFirstItem(1)
-        .split("\\s+")
-        .map { attr =>
-          val Array(k, v) = attr.split("=", 2)
-          k.trim -> v.trim.stripPrefix("\"").stripSuffix("\"")
-        }.toMap
-    }
+    else {Map[String, String]()}
+//    else {
+//      splitFirstItem(1)
+//        .split("\\s+")
+//        .map { attr =>
+//          val Array(k, v) = attr.split("=", 2)
+//          k.trim -> v.trim.stripPrefix("\"").stripSuffix("\"")
+//        }.toMap
+//    }
   }
-
-//  println("PROCESSED")
-//  println(s"<${splitFirstItem.head}>")
 
   (s"<${splitFirstItem.head}>", attributesMap)
 }
@@ -59,7 +53,10 @@ private def extractTagMetadata(tag: String) : (String, Map[String, String]) = {
 object HTMLTagExtractor {
   // TODO : Strip out the DOCTYPE HTML
   // TODO : Nowhere are we handling non void tags yet
+  // TODO : You have to strip out comments. Pattern match first <html> and </html>
+  // TODO : Class can have multiple values seperated by spaces
   def parseHTML(html: String, startIndex: Int, endIndex: Int): List[DOMObject] = {
+    println(s"$startIndex, $endIndex")
     var iteratingIndex: Int = startIndex
     var previousCommitedIndex = startIndex
 
@@ -78,28 +75,23 @@ object HTMLTagExtractor {
             val closingTag: String = getClosingTagGivenTag(tag)
             val closingTagIndex: Int = html.indexOf(closingTag, iteratingIndex)
 
-//            println("PRINTING A CLOSING TAG")
-//            println(tag)
-
             if(closingTagIndex == -1) {
               // May potentially be a void tag
               // TODO: This is going to be insanely janky, look at this later, also do it idiomatically
               // There is also a bug that if what is in between is junk it'll try parsing
-              val potential_void_closing_tag: Int = html.indexOf("/>", iteratingIndex)
+              val potential_void_closing_tag: Int = html.indexOf(">", iteratingIndex)
               if(potential_void_closing_tag != -1) {
                 val (processedTag, processedAttr) = extractTagMetadata(tag)
                 val tagType: TagKind = tagKind(processedTag)
-//                println("PRINTING A TAG TYPE")
-//                println(processedTag)
-//                println(tagType)
 
                 tagType match {
-                  case VoidTag =>
-                    returnList = returnList :+ DOMVoidTag(processedTag, processedAttr)
-                    previousCommitedIndex = potential_void_closing_tag + 2
-                    iteratingIndex = previousCommitedIndex
+//                  case VoidTag =>
+//                    returnList = returnList :+ DOMVoidTag(processedTag, processedAttr)
+//                    previousCommitedIndex = potential_void_closing_tag + 2
+//                    iteratingIndex = previousCommitedIndex
                   case _ =>
-                    throw Exception("Undefined exception regarding invalid match. This should only be a NonVoidTag if in here")
+//                    println("Do something here")
+                    // throw Exception("Undefined exception regarding invalid match. This should only be a NonVoidTag if in here")
                 }
               } else {
                 currentString.append(html.charAt(iteratingIndex))
@@ -116,9 +108,9 @@ object HTMLTagExtractor {
               val tagType: TagKind = tagKind(processedTag)
 
               tagType match {
-                case NonVoidTag =>
-                  returnList = returnList :+ DOMNonVoidTag(processedTag, parseHTML(html, iteratingIndex + tag.length,
-                    closingTagIndex - 1), processedAttr)
+//                case NonVoidTag =>
+//                  returnList = returnList :+ DOMNonVoidTag(processedTag, parseHTML(html, iteratingIndex + tag.length,
+//                    closingTagIndex - 1), processedAttr)
 //                case VoidTag =>
 //                  returnList = returnList :+ DOMVoidTag(processedTag, processedAttr)
                 case _ =>
@@ -142,5 +134,9 @@ object HTMLTagExtractor {
     }
 
     returnList
+  }
+
+  def parseHTML(html:String): List[DOMObject] = {
+    parseHTML(html, html.indexOf("<html"), html.indexOf("</html>") + "</html>".length)
   }
 }
