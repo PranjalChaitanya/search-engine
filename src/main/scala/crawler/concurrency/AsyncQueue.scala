@@ -6,30 +6,42 @@ import scala.collection.mutable
 import scala.collection.mutable.Queue
 
 class AsyncQueue[A] {
-  private var items : Queue[A] = new mutable.Queue[A]()
-  private var waiters : Queue[(() => Unit)] = new mutable.Queue[() => Unit]()
+  private val items : Queue[A] = new mutable.Queue[A]()
+  private val waiters : Queue[(() => Unit)] = new mutable.Queue[() => Unit]()
   private val lock = AnyRef
 
   def push(item : A): Unit = lock.synchronized {
     items.enqueue(item)
+    var waker: Option[(() => Unit)] = None
 
-    if(waiters.isEmpty) {
-      val waker: (() => Unit) = waiters.dequeue()
-      waker()
+    if(waiters.nonEmpty) {
+      waker = Some(waiters.dequeue())
     }
+
+    waker.foreach(_())
   }
-  
-  // TODO : There is a bug here where if the same thread calls pop multiple times it 
-  // will get added to waiter multiple times.
+
   def pop(): Future[A] = lock.synchronized {
     new Future[A]:
-      override def poll(callback: () => Unit): FutureState[A] = {
-        items.isEmpty match
-          case false =>
-            FutureState.READY(items.dequeue())
-          case true =>
-            waiters.enqueue(callback)
-            FutureState.PENDING
+      private var done : Boolean = false
+      private var registered: Boolean = false
+      private var poppedValue : Option[FutureState[A]] = None
+
+      override def poll(callback: () => Unit): FutureState[A] = lock.synchronized {
+        poppedValue.getOrElse(
+          items.isEmpty match
+            case false =>
+              done = true
+              val readyState: FutureState[A] = FutureState.READY(items.dequeue())
+              poppedValue = Some(readyState)
+              readyState
+            case true =>
+              if(!registered) {
+                waiters.enqueue(callback)
+                registered = true
+              }
+              FutureState.PENDING
+        )
       }
   }
 }
