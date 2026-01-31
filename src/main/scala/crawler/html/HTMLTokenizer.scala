@@ -118,7 +118,7 @@ private def refineToken(token: HTMLObjectToken) : Option[HTMLObjectToken] = {
 }
 
 object HTMLTokenizer {
-  def tokenize(html: String) : ListBuffer[HTMLObjectToken] = {
+  def tokenize(html: String) : List[HTMLObjectToken] = {
     val listBuffer : ListBuffer[HTMLObjectToken] = ListBuffer.empty[HTMLObjectToken]
     val stringBuffer : StringBuilder = StringBuilder("")
 
@@ -151,7 +151,7 @@ object HTMLTokenizer {
     }
 
     // Second phase of refining the tokens
-    val refinedTokens = listBuffer.flatMap(refineToken)
+    val refinedTokens : List[HTMLObjectToken] = listBuffer.flatMap(refineToken).toList
 
     refinedTokens
   }

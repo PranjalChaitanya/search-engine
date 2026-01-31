@@ -45,3 +45,5 @@ build/
 
 ### Scala ###
 .bsp/
+
+src/test/scala/html/Sample.txt
