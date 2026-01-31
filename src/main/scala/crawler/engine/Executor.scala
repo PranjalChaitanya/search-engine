@@ -1,4 +1,4 @@
-package crawler
+package crawler.engine
 
 import crawler.concurrency.AsyncQueue
 import crawler.core.FutureState
@@ -7,10 +7,10 @@ import scala.collection.mutable
 
 class Executor(taskQueue : AsyncQueue[() => Unit]) {
   def wake(): Unit = {
-    executionEventLoop()
+    executionFromQueue()
   }
   
-  def executionEventLoop(): Unit = {
+  def executionFromQueue(): Unit = {
     taskQueue.pop().poll(wake) match {
       case FutureState.READY(data: (() => Unit)) =>
         data()
