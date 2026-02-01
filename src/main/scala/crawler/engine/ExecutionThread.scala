@@ -9,6 +9,7 @@ class ExecutionThread(taskQueue : AsyncQueue[() => Unit]) {
   def shutDown(): Unit = (running = false)
 
   def startThread() : Unit = {
+    running = true
     while(running) {
       executor.executionFromQueue()
     }

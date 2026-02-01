@@ -1,6 +1,6 @@
 package crawler.core
 
-final case class State[A](state: A)
+trait State
 
 class StateMachine[A, B] (states: List[A], startingState: A, stepFunction: B => A) {
   var currentState: A = startingState

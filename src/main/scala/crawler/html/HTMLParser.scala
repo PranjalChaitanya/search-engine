@@ -41,14 +41,12 @@ private def parseTokenStream(tokenStream: List[HTMLObjectToken], index: Int) : (
   (domObjectList, tokenStream.length)
 }
 
-object HTMLParser {
-  def parseHTML(html:String): List[DOMObject] = {
-    val parsedHTMLString: String = s"<dummy>$html</dummy>"
+def parseHTML(html:String): List[DOMObject] = {
+  val parsedHTMLString: String = s"<dummy>$html</dummy>"
 
-    val tokenizedHTML: List[HTMLObjectToken] = HTMLTokenizer.tokenize(parsedHTMLString).filterNot(x => {
-      x.isInstanceOf[CommentToken] || x.isInstanceOf[DoctypeToken]
-    })
+  val tokenizedHTML: List[HTMLObjectToken] = tokenize(parsedHTMLString).filterNot(x => {
+    x.isInstanceOf[CommentToken] || x.isInstanceOf[DoctypeToken]
+  })
 
-    parseTokenStream(tokenizedHTML, 0)(0).toList
-  }
+  parseTokenStream(tokenizedHTML, 0)(0).toList
 }

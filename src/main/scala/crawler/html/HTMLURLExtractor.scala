@@ -15,5 +15,3 @@ def extractURL(domObjects: List[DOMObject]): List[String] = domObjects.flatMap(d
   case _ =>
     List.empty[String]
 })
-
-def extractURL(html: String) : List[String] = extractURL(HTMLParser.parseHTML(html))

@@ -2,7 +2,9 @@ package html
 
 import scala.io.Source
 import scala.util.Using
-import crawler.html.{DOMNonVoidTag, DOMObject, HTMLParser, HTMLTokenizer, extractURL}
+import crawler.html.{DOMNonVoidTag, DOMObject, extractURL}
+
+import crawler.scraper.scrapeWebpage
 
 object FileTest extends Runnable {
   @main
@@ -13,7 +15,8 @@ object FileTest extends Runnable {
     }.getOrElse("")
 
 //    println(HTMLParser.parseHTML(fileContents))
-    println(extractURL(fileContents))
+//    println(extractURL(fileContents))
+
 
 //    println(fileContents)
 //    println(HTMLTokenizer.tokenize(fileContents))

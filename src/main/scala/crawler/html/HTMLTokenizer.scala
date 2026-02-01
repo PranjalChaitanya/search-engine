@@ -117,42 +117,40 @@ private def refineToken(token: HTMLObjectToken) : Option[HTMLObjectToken] = {
   }
 }
 
-object HTMLTokenizer {
-  def tokenize(html: String) : List[HTMLObjectToken] = {
-    val listBuffer : ListBuffer[HTMLObjectToken] = ListBuffer.empty[HTMLObjectToken]
-    val stringBuffer : StringBuilder = StringBuilder("")
+def tokenize(html: String): List[HTMLObjectToken] = {
+  val listBuffer: ListBuffer[HTMLObjectToken] = ListBuffer.empty[HTMLObjectToken]
+  val stringBuffer: StringBuilder = StringBuilder("")
 
-    var openTag: Boolean = false
+  var openTag: Boolean = false
 
-    for(htmlChar <- html) {
-      htmlChar match {
-        case '<' =>
-          if(stringBuffer.nonEmpty) {
-            listBuffer += TextToken(stringBuffer.toString())
-          }
-          stringBuffer.clear()
-          openTag = true
-          stringBuffer.append(htmlChar)
-        case '>' =>
-          stringBuffer.append(htmlChar)
-          if(stringBuffer.nonEmpty) {
-            listBuffer += RawTagToken(stringBuffer.toString())
-          }
-          stringBuffer.clear()
-          openTag = false
-        case _ =>
-          stringBuffer.append(htmlChar)
-      }
+  for (htmlChar <- html) {
+    htmlChar match {
+      case '<' =>
+        if (stringBuffer.nonEmpty) {
+          listBuffer += TextToken(stringBuffer.toString())
+        }
+        stringBuffer.clear()
+        openTag = true
+        stringBuffer.append(htmlChar)
+      case '>' =>
+        stringBuffer.append(htmlChar)
+        if (stringBuffer.nonEmpty) {
+          listBuffer += RawTagToken(stringBuffer.toString())
+        }
+        stringBuffer.clear()
+        openTag = false
+      case _ =>
+        stringBuffer.append(htmlChar)
     }
-
-    if(stringBuffer.nonEmpty) {
-      listBuffer += TextToken(stringBuffer.toString())
-      stringBuffer.clear()
-    }
-
-    // Second phase of refining the tokens
-    val refinedTokens : List[HTMLObjectToken] = listBuffer.flatMap(refineToken).toList
-
-    refinedTokens
   }
+
+  if (stringBuffer.nonEmpty) {
+    listBuffer += TextToken(stringBuffer.toString())
+    stringBuffer.clear()
+  }
+
+  // Second phase of refining the tokens
+  val refinedTokens: List[HTMLObjectToken] = listBuffer.flatMap(refineToken).toList
+
+  refinedTokens
 }

@@ -34,14 +34,14 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   "parseHTML" should "parse plain text correctly" in {
     val html = "hello world"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     result shouldBe List(DOMText("hello world"))
   }
 
   it should "parse a simple non-void tag with correct children" in {
     val html = "<p>hello</p>"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val p = nonVoid(result.head)
     p.tagType shouldBe "p"
@@ -51,7 +51,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "preserve surrounding text" in {
     val html = "hi <p>there</p> friend"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     text(result(0)) shouldBe "hi "
     val p = nonVoid(result(1))
@@ -66,7 +66,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse single attribute correctly" in {
     val html = """<a href="https://example.com">x</a>"""
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val a = nonVoid(result.head)
     a.tagType shouldBe "a"
@@ -75,7 +75,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse multiple attributes correctly" in {
     val html = """<a href="x" class="y">z</a>"""
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val a = nonVoid(result.head)
     a.attrs shouldBe Map(
@@ -90,7 +90,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse <br> as a void tag" in {
     val html = "<br>"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val br = void(result.head)
     br.tagType shouldBe "br"
@@ -99,7 +99,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse <br /> as a void tag" in {
     val html = "<br />"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val br = void(result.head)
     br.tagType shouldBe "br"
@@ -111,7 +111,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse nested tags with correct structure" in {
     val html = "<div><p>hello</p></div>"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val div = nonVoid(result.head)
     div.tagType shouldBe "div"
@@ -123,7 +123,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
 
   it should "parse multiple nested siblings correctly inside html root" in {
     val html = "<html><ul><li>a</li><li>b</li></ul></html>"
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val htmlTag = nonVoid(result.head)
     htmlTag.tagType shouldBe "html"
@@ -146,21 +146,21 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
   it should "not crash on malformed html" in {
     val html = "<p><</p>"
     noException shouldBe thrownBy {
-      HTMLParser.parseHTML(html)
+      parseHTML(html)
     }
   }
 
   it should "not crash on unclosed tag" in {
     val html = "<html><p>hello</html>"
     noException shouldBe thrownBy {
-      HTMLParser.parseHTML(html)
+      parseHTML(html)
     }
   }
 
   it should "not crash on random input" in {
     val html = "<<<<<<<<>>>>>>>>>"
     noException shouldBe thrownBy {
-      HTMLParser.parseHTML(html)
+      parseHTML(html)
     }
   }
 
@@ -172,7 +172,7 @@ class HTMLParserSpec extends AnyFlatSpec with Matchers {
     val html =
       "<html><br /> Hello <p>Basic <ul><li>Deep</li></ul> text</p></html>"
 
-    val result = HTMLParser.parseHTML(html)
+    val result = parseHTML(html)
 
     val htmlTag = nonVoid(result.head)
     htmlTag.tagType shouldBe "html"

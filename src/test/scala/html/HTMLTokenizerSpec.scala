@@ -36,7 +36,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   "HTMLTokenizer" should "tokenize plain text" in {
-    val tokens = HTMLTokenizer.tokenize("hello world").toList
+    val tokens = tokenize("hello world").toList
 
     tokens shouldBe List(
       TextToken("hello world")
@@ -48,7 +48,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "tokenize a simple open/close tag pair" in {
-    val tokens = HTMLTokenizer.tokenize("<p>hello</p>").toList
+    val tokens = tokenize("<p>hello</p>").toList
 
     tokens shouldBe List(
       OpenTagToken("p", Map.empty),
@@ -58,7 +58,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "preserve surrounding text" in {
-    val tokens = HTMLTokenizer.tokenize("hi <p>there</p> friend").toList
+    val tokens = tokenize("hi <p>there</p> friend").toList
 
     text(tokens(0)) shouldBe "hi "
     open(tokens(1)).tagName shouldBe "p"
@@ -72,7 +72,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "parse a single attribute" in {
-    val tokens = HTMLTokenizer.tokenize("""<a href="x">y</a>""").toList
+    val tokens = tokenize("""<a href="x">y</a>""").toList
 
     val a = open(tokens.head)
     a.tagName shouldBe "a"
@@ -80,7 +80,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "parse multiple attributes" in {
-    val tokens = HTMLTokenizer.tokenize(
+    val tokens = tokenize(
       """<a href="x" class="y" id="z">text</a>"""
     ).toList
 
@@ -97,7 +97,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "parse void tags correctly" in {
-    val tokens = HTMLTokenizer.tokenize("<br>").toList
+    val tokens = tokenize("<br>").toList
 
     val br = void(tokens.head)
     br.tagName shouldBe "br"
@@ -105,7 +105,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "parse void tag with attributes" in {
-    val tokens = HTMLTokenizer.tokenize("""<img src="a.png" />""").toList
+    val tokens = tokenize("""<img src="a.png" />""").toList
 
     val img = void(tokens.head)
     img.tagName shouldBe "img"
@@ -117,7 +117,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "parse HTML comments" in {
-    val tokens = HTMLTokenizer.tokenize("a <!-- hello --> b").toList
+    val tokens = tokenize("a <!-- hello --> b").toList
 
     tokens shouldBe List(
       TextToken("a "),
@@ -131,7 +131,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "parse doctype" in {
-    val tokens = HTMLTokenizer.tokenize("<!DOCTYPE html>").toList
+    val tokens = tokenize("<!DOCTYPE html>").toList
 
     tokens shouldBe List(
       DoctypeToken()
@@ -144,7 +144,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
 
   it should "parse mixed text, tags, and void tags" in {
     val html = "Hi <br> there <p>friend</p>"
-    val tokens = HTMLTokenizer.tokenize(html).toList
+    val tokens = tokenize(html).toList
 
     tokens shouldBe List(
       TextToken("Hi "),
@@ -161,7 +161,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
   // --------------------------------------------------
 
   it should "tokenize nested tags in correct order" in {
-    val tokens = HTMLTokenizer.tokenize("<div><p>x</p></div>").toList
+    val tokens = tokenize("<div><p>x</p></div>").toList
 
     tokens.map(_.getClass) shouldBe List(
       classOf[OpenTagToken],
@@ -183,19 +183,19 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
 
   it should "not crash on malformed HTML" in {
     noException shouldBe thrownBy {
-      HTMLTokenizer.tokenize("<p><</p>")
+      tokenize("<p><</p>")
     }
   }
 
   it should "not crash on random garbage" in {
     noException shouldBe thrownBy {
-      HTMLTokenizer.tokenize("<<<<<<>>>>>>")
+      tokenize("<<<<<<>>>>>>")
     }
   }
 
   it should "not crash on unclosed tags" in {
     noException shouldBe thrownBy {
-      HTMLTokenizer.tokenize("<html><p>hello</html>")
+      tokenize("<html><p>hello</html>")
     }
   }
 
@@ -207,7 +207,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
     val html =
       "<!DOCTYPE html><html><body>Hello<br><p>World</p></body></html>"
 
-    val tokens = HTMLTokenizer.tokenize(html).toList
+    val tokens = tokenize(html).toList
 
     tokens.exists(_.isInstanceOf[DoctypeToken]) shouldBe true
     tokens.exists {
@@ -226,7 +226,7 @@ class HTMLTokenizerSpec extends AnyFlatSpec with Matchers {
 
   it should "be deterministic" in {
     val html = "<p>a</p>"
-    HTMLTokenizer.tokenize(html).toList shouldBe
-      HTMLTokenizer.tokenize(html).toList
+    tokenize(html).toList shouldBe
+      tokenize(html).toList
   }
 }

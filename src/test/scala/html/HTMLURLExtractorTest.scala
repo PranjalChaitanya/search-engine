@@ -1,20 +1,23 @@
 package html
 
 import crawler.html.*
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 import scala.List
 
 class HTMLURLExtractorTest extends AnyFlatSpec with Matchers {
+  private def extractURLUtil(html: String): List[String] = extractURL(parseHTML(html))
+  
   it should "extract url on single tag" in {
-    val links: List[String] = extractURL("<a href=\"https://gossim.com\">Link</a>")
+    val links: List[String] = extractURLUtil("<a href=\"https://gossim.com\">Link</a>")
 
     links shouldBe List("https://gossim.com")
   }
 
   it should "extract url on nested tag" in {
-    val links: List[String] = extractURL("<p><a href=\"https://gossim.com\">Link</a></p>")
+    val links: List[String] = extractURLUtil("<p><a href=\"https://gossim.com\">Link</a></p>")
 
     links shouldBe List("https://gossim.com")
   }
@@ -47,7 +50,7 @@ class HTMLURLExtractorTest extends AnyFlatSpec with Matchers {
                          |</body>
                          |</html>
                          |""".stripMargin
-    val links: List[String] = extractURL(html)
+    val links: List[String] = extractURLUtil(html)
 
     links shouldBe List("https://example.com", "https://example.com/about", "/contact", "https://docs.example.com/api",
       "/help", "/terms", "https://github.com/example/repo")
