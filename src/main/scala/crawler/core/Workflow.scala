@@ -1,28 +1,26 @@
 package crawler.core
 
-trait WorkflowContext
+trait StepResult
 
-//case class WorkflowState[A, B](func:A => B) extends State
+final case class WorkflowStepSuccess(data: Any)
+final case class WorkflowStepFailure(data: Any)
 
-trait Step {
-  type in
-  type out
-  
-  def run(input: in) : out
+class WorkflowContext() {
+  val ctx: Map[String, Any] = Map() 
 }
 
-trait WorkflowStep[A, B](func: A => B) extends Step {
-  override type in = A
-  override type out = B
-  
-  def run(input: A) : B = {
-    func(input)
-  }
+trait WorkflowStep {
+  def run(input: WorkflowContext) : StepResult
 }
 
-// A, and B correspond to the functions associated with the workflow itself
-// C corresponds to the input to the step function
+trait WorkflowTransition {
+  // Return None when the workflow is completed
+  def next(result: StepResult) : Option[WorkflowStep]
+}
+
 trait Workflow {
-  val stateMachine : StateMachine[Step, WorkflowContext]
-  def executeAndMoveState(stateInput: WorkflowContext): Step
+  type StepIdType = String
+  
+  val startingStep: WorkflowStep
+  val workflowSteps: List[(WorkflowStep, WorkflowTransition)]
 }

@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/pipeline/CrawlPipeline.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/scraper/URLScraper.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/StateMachine.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/StateMachine.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionThread.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionThread.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTokenizer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLTokenizer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/FileTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/FileTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/HTMLURLExtractorTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/HTMLURLExtractorTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/pipeline/CrawlPipeline.scala" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,35 +35,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.hello.executor&quot;: &quot;Run&quot;,
-    &quot;Application.mainFunc.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ScalaTest.AsyncQueueSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLParserSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLTagExtractorSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLTokenizerSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.hello.executor": "Run",
+    "Application.mainFunc.executor": "Run",
+    "Application.run.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly.executor": "Run",
+    "ScalaTest.AsyncQueueSpec.executor": "Run",
+    "ScalaTest.HTMLParserSpec.executor": "Run",
+    "ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor": "Run",
+    "ScalaTest.HTMLTagExtractorSpec.executor": "Run",
+    "ScalaTest.HTMLTokenizerSpec.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor": "Run",
+    "git-widget-placeholder": "new__workflow__system",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.run">
+}]]></component>
+  <component name="RunManager" selected="ScalaTest.AsyncQueueSpec">
     <configuration name="run" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="html.run" />
       <module name="search-engine" />
@@ -113,6 +107,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Test name" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="crawler.concurrency.AsyncQueueSpec" />
+      <option name="testName" value="AsyncQueue should not crash when pop is polled repeatedly" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HTMLURLExtractorTest" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
@@ -137,36 +161,6 @@
       <option name="testKind" value="Class" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <option name="testClassPath" value="html.HTMLURLExtractorTest" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HTMLURLExtractorTest.should extract url on nested tag" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Test name" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="html.HTMLURLExtractorTest" />
-      <option name="testName" value="should extract url on nested tag" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -204,11 +198,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.run" />
         <item itemvalue="ScalaTest.AsyncQueueSpec" />
+        <item itemvalue="ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly" />
+        <item itemvalue="Application.run" />
         <item itemvalue="ScalaTest.HTMLURLExtractorTest" />
         <item itemvalue="ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html" />
-        <item itemvalue="ScalaTest.HTMLURLExtractorTest.should extract url on nested tag" />
       </list>
     </recent_temporary>
   </component>
@@ -245,7 +239,9 @@
       <workItem from="1769927362742" duration="3276000" />
       <workItem from="1769958647645" duration="721000" />
       <workItem from="1769959505855" duration="4250000" />
-      <workItem from="1769966428074" duration="659000" />
+      <workItem from="1769966428074" duration="1058000" />
+      <workItem from="1770063694894" duration="3719000" />
+      <workItem from="1771377004540" duration="5849000" />
     </task>
     <servers />
   </component>
