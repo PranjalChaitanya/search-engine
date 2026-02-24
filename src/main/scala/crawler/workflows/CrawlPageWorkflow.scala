@@ -2,9 +2,10 @@ package crawler.workflows
 
 import crawler.core.{StepResult, Workflow, WorkflowContext, WorkflowExecution, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition, executeEntireWorkflow}
 import crawler.engine.ExecutionEngine
-import crawler.html.{DOMObject, extractURL, parseHTML}
+import crawler.html.{DOMObject, createURL, extractURL, parseHTML}
 import crawler.scraper.scrapeWebpage
 import crawler.workflows.factories.CrawlPageWorkflowFactory
+import crawler.workflows.factories.CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback
 
 case object FetchWebpageStep extends WorkflowStep {
   override def run(input: WorkflowContext): StepResult = {
@@ -56,22 +57,25 @@ case object SubmitNewJobsStep extends WorkflowStep {
       case None =>
         return WorkflowFailure
     }
-    
+
     val extractedURLs : List[String] = input.ctx.get("extracted_urls") match {
       case Some(s) => s.asInstanceOf[List[String]]
       case None =>
         return WorkflowFailure
     }
+
+    val webpageURL : String = input.ctx("webpage_url").toString
+
+    val newURLS = extractedURLs.map(url => {
+      createURL(url, webpageURL)
+    })
     
     extractedURLs.foreach(url => {
       executionEngine.submitJob(() => {
-        val workflowExecution : WorkflowExecution = 
-          CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, executionEngine)
-
-        executeEntireWorkflow(workflowExecution)
+        createCrawlPageWorkflowExecutionCallback(createURL(url, webpageURL), executionEngine)
       })
     })
-    
+
     WorkflowSuccess
   }
 }

@@ -1,6 +1,6 @@
 package crawler.workflows.factories
 
-import crawler.core.WorkflowExecution
+import crawler.core.{WorkflowExecution, executeEntireWorkflow}
 import crawler.engine.ExecutionEngine
 import crawler.workflows.CrawlPageWorkflow
 
@@ -11,5 +11,14 @@ object CrawlPageWorkflowFactory {
     workflowExecution.workflowContext.ctx.put("execution_engine", engine)
     
     workflowExecution
+  }
+  
+  def createCrawlPageWorkflowExecutionCallback(url: String, engine: ExecutionEngine) : (() => Unit) = {
+    () => {
+      val workflowExecution: WorkflowExecution =
+        CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, engine)
+
+      executeEntireWorkflow(workflowExecution)
+    }
   }
 }
