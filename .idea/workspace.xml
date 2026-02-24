@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/scala/engine/BasicExecutionEngineTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionThread.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionThread.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,110 +37,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.hello.executor": "Run",
-    "Application.mainFunc.executor": "Run",
-    "Application.run.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly.executor": "Run",
-    "ScalaTest.AsyncQueueSpec.executor": "Run",
-    "ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs.executor": "Run",
-    "ScalaTest.BasicExecutionEngineTest.should do basically nothing.executor": "Run",
-    "ScalaTest.HTMLParserSpec.executor": "Run",
-    "ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor": "Run",
-    "ScalaTest.HTMLTagExtractorSpec.executor": "Run",
-    "ScalaTest.HTMLTokenizerSpec.executor": "Run",
-    "ScalaTest.HTMLURLExtractorTest.executor": "Run",
-    "ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor": "Run",
-    "ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor": "Run",
-    "ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor": "Run",
-    "git-widget-placeholder": "new__workflow__system",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.hello.executor&quot;: &quot;Run&quot;,
+    &quot;Application.mainFunc.executor&quot;: &quot;Run&quot;,
+    &quot;Application.run.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.AsyncQueueSpec.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.BasicExecutionEngineTest.should do basically nothing.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition in success path.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution.executor&quot;: &quot;Debug&quot;,
+    &quot;ScalaTest.CrawlPageWorkflowTest.should properly execute and create a workflow execution.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLParserSpec.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLTagExtractorSpec.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLTokenizerSpec.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLURLExtractorTest.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor&quot;: &quot;Run&quot;,
+    &quot;ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;new__workflow__system&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs">
-    <configuration name="run" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="html.run" />
-      <module name="search-engine" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="html.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AsyncQueueSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Class" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="crawler.concurrency.AsyncQueueSpec" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Test name" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="crawler.concurrency.AsyncQueueSpec" />
-      <option name="testName" value="AsyncQueue should not crash when pop is polled repeatedly" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+}</component>
+  <component name="RunManager" selected="ScalaTest.CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution">
     <configuration name="BasicExecutionEngineTest.should basic engine test handling basic jobs" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
@@ -168,7 +106,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BasicExecutionEngineTest.should do basically nothing" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <configuration name="CrawlPageWorkflowTest.should fetch a page and transition in success path" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
       <option name="allowRunningInParallel" value="false" />
@@ -191,8 +129,98 @@
       </option>
       <option name="testKind" value="Test name" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="engine.BasicExecutionEngineTest" />
-      <option name="testName" value="should do basically nothing" />
+      <option name="testClassPath" value="workflows.CrawlPageWorkflowTest" />
+      <option name="testName" value="should fetch a page and transition in success path" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CrawlPageWorkflowTest.should fetch a page and transition" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Test name" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="workflows.CrawlPageWorkflowTest" />
+      <option name="testName" value="should fetch a page and transition" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Test name" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="workflows.CrawlPageWorkflowTest" />
+      <option name="testName" value="should properly execute a single step and create a workflow execution" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CrawlPageWorkflowTest.should properly execute and create a workflow execution" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Test name" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="workflows.CrawlPageWorkflowTest" />
+      <option name="testName" value="should properly execute and create a workflow execution" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -200,11 +228,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution" />
+        <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should properly execute and create a workflow execution" />
+        <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition in success path" />
+        <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition" />
         <item itemvalue="ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs" />
-        <item itemvalue="ScalaTest.BasicExecutionEngineTest.should do basically nothing" />
-        <item itemvalue="ScalaTest.AsyncQueueSpec" />
-        <item itemvalue="ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly" />
-        <item itemvalue="Application.run" />
       </list>
     </recent_temporary>
   </component>
@@ -244,11 +272,28 @@
       <workItem from="1769966428074" duration="1058000" />
       <workItem from="1770063694894" duration="3719000" />
       <workItem from="1771377004540" duration="6312000" />
-      <workItem from="1771910413724" duration="2838000" />
+      <workItem from="1771910413724" duration="2970000" />
+      <workItem from="1771953659303" duration="5390000" />
+      <workItem from="1771961874330" duration="1506000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala</url>
+          <line>12</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -12,21 +12,25 @@ class WorkflowExecution(workflow: Workflow) {
 def executeWorkflowStep(workflowExecution: WorkflowExecution): Unit = {
   val workflowSteps = workflowExecution.workflowDefinition.workflowSteps
 
+//  val workflowTransition = workflowSteps.find((workflowStep, workflowTransition) => {
   val workflowTransition: Option[(WorkflowStep, WorkflowTransition)] = workflowSteps.find((workflowStep, workflowTransition) => {
-    if(workflowStep == workflowExecution.currentState) {
-      return true
+//    if(workflowStep == workflowExecution.currentState) {
+    if(workflowStep.getClass == workflowExecution.currentState.getClass) {
+      true
     }
-    return false
+    true
   })
 
   workflowTransition match {
     case Some((workflowStep, workflowTransition)) =>
+      println("A same class is found")
       val executionResult: StepResult = workflowStep.run(workflowExecution.workflowContext)
       workflowExecution.currentState = Some(workflowTransition.next(executionResult)).getOrElse({
         workflowExecution.isComplete = true
         None
       })
     case None =>
+      println("A same class is not found")
       return
   }
 }

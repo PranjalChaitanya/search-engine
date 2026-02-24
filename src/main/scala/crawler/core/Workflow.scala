@@ -1,12 +1,14 @@
 package crawler.core
 
+import scala.collection.concurrent.TrieMap
+
 trait StepResult
 
-final case class WorkflowStepSuccess(data: Any)
-final case class WorkflowStepFailure(data: Any)
+final case class WorkflowStepSuccess(data: Any) extends StepResult
+final case class WorkflowStepFailure(data: Any) extends StepResult
 
 class WorkflowContext() {
-  val ctx: Map[String, Any] = Map() 
+  val ctx: TrieMap[String, Any] = TrieMap.empty
 }
 
 trait WorkflowStep {
