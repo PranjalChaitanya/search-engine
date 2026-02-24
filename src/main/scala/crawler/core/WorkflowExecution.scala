@@ -6,31 +6,26 @@ class WorkflowExecution(workflow: Workflow) {
   val workflowContext: WorkflowContext = WorkflowContext()
 
   var currentState: Option[WorkflowStep] = Some(workflowDefinition.startingStep)
-  var isComplete: Boolean = false
 }
 
 def executeWorkflowStep(workflowExecution: WorkflowExecution): Unit = {
-  val workflowSteps = workflowExecution.workflowDefinition.workflowSteps
+  val step: WorkflowStep = workflowExecution.currentState match {
+    case Some(s) => s
+    case None => return // returned when Step is not defined
+  }
 
-//  val workflowTransition = workflowSteps.find((workflowStep, workflowTransition) => {
-  val workflowTransition: Option[(WorkflowStep, WorkflowTransition)] = workflowSteps.find((workflowStep, workflowTransition) => {
-//    if(workflowStep == workflowExecution.currentState) {
-    if(workflowStep.getClass == workflowExecution.currentState.getClass) {
-      true
-    }
-    true
-  })
-
-  workflowTransition match {
-    case Some((workflowStep, workflowTransition)) =>
-      println("A same class is found")
-      val executionResult: StepResult = workflowStep.run(workflowExecution.workflowContext)
-      workflowExecution.currentState = Some(workflowTransition.next(executionResult)).getOrElse({
-        workflowExecution.isComplete = true
-        None
-      })
+  val stepResult : StepResult = step.run(workflowExecution.workflowContext)
+  val transition : WorkflowTransition = workflowExecution.workflowDefinition.transitions.get(step) match {
+    case Some(s) => s
     case None =>
-      println("A same class is not found")
+      workflowExecution.currentState = None
       return
+  }
+  
+  stepResult match {
+    case WorkflowSuccess =>
+      workflowExecution.currentState = transition.onSuccess
+    case WorkflowFailure =>
+      workflowExecution.currentState = transition.onFailure
   }
 }

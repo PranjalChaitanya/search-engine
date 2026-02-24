@@ -1,33 +1,24 @@
 package workflows
 
-import crawler.core.{StepResult, WorkflowContext, WorkflowExecution, WorkflowStep, WorkflowStepSuccess, executeWorkflowStep}
+import crawler.core.{StepResult, WorkflowContext, WorkflowExecution, WorkflowStep, executeWorkflowStep}
+import crawler.workflows.{FetchWebpageStep, TokenizeWebpageStep}
 import crawler.workflows.factories.CrawlPageWorkflowFactory
-import crawler.workflows.{FetchWebpage, FetchWebpageTransition, TokenizeWebpage}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
-import scala.collection.concurrent.TrieMap
 
 // Workflows are usually definitions, so testing workflows is usually not worthwhile. However, the purpose of this test
 // is to test the core classes like Workflow and WorkflowExecution and all the related classes
 class CrawlPageWorkflowTest extends AnyFlatSpec with Matchers {
+  // Can't really test the contents of what you scrape because it changes
   it should "fetch a page and transition in success path" in {
     val workflowContext : WorkflowContext = WorkflowContext()
 
     workflowContext.ctx.put("webpage_url", "https://en.wikipedia.org/wiki/Apache_Iceberg")
 
-    val outcomeResult: StepResult = FetchWebpage().run(workflowContext)
+    val outcomeResult: StepResult = FetchWebpageStep.run(workflowContext)
 
-    assert(workflowContext.ctx.contains("scraped_result"))
-    assert(workflowContext.ctx("scraped_result").toString.nonEmpty)
-
-    assert(outcomeResult.isInstanceOf[WorkflowStepSuccess])
-
-    val fetchWebpageTransition : FetchWebpageTransition = FetchWebpageTransition()
-    val nextWorkflowStep : Option[WorkflowStep] =fetchWebpageTransition.next(outcomeResult)
-
-    assert(nextWorkflowStep.isDefined)
-    assert(nextWorkflowStep.get.isInstanceOf[TokenizeWebpage])
+    workflowContext.ctx.contains("scraped_result") shouldBe true
+    workflowContext.ctx("scraped_result").toString.nonEmpty shouldBe true
   }
 
   it should "properly execute a single step and create a workflow execution" in {
@@ -36,11 +27,7 @@ class CrawlPageWorkflowTest extends AnyFlatSpec with Matchers {
 
     executeWorkflowStep(workflowExecution)
 
-    println("Step 1")
-    println(workflowExecution.workflowContext.ctx)
-    println(workflowExecution.workflowDefinition)
-    println(workflowExecution.currentState)
-    println(workflowExecution.isComplete)
-    println("Step 2")
+    workflowExecution.workflowContext.ctx.contains("scraped_result") shouldBe true
+    workflowExecution.currentState.contains(TokenizeWebpageStep) shouldBe true
   }
 }
