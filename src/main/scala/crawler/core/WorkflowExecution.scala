@@ -29,3 +29,11 @@ def executeWorkflowStep(workflowExecution: WorkflowExecution): Unit = {
       workflowExecution.currentState = transition.onFailure
   }
 }
+
+def executeEntireWorkflow(workflowExecution: WorkflowExecution) : Unit = {
+  val currentState: WorkflowStep = workflowExecution.currentState.getOrElse(return)
+  
+  // Calls each step until we eventually reach None
+  executeWorkflowStep(workflowExecution)
+  executeEntireWorkflow(workflowExecution)
+}

@@ -1,7 +1,8 @@
 package workflows
 
-import crawler.core.{StepResult, WorkflowContext, WorkflowExecution, WorkflowStep, executeWorkflowStep}
-import crawler.workflows.{FetchWebpageStep, TokenizeWebpageStep}
+import crawler.core.{StepResult, WorkflowContext, WorkflowExecution, WorkflowStep, executeEntireWorkflow, executeWorkflowStep}
+import crawler.engine.ExecutionEngine
+import crawler.workflows.{FetchWebpageStep, ParseWebpageStep}
 import crawler.workflows.factories.CrawlPageWorkflowFactory
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -23,11 +24,27 @@ class CrawlPageWorkflowTest extends AnyFlatSpec with Matchers {
 
   it should "properly execute a single step and create a workflow execution" in {
     val url : String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
-    val workflowExecution : WorkflowExecution = CrawlPageWorkflowFactory().createCrawlPageWorkflowExecution(url)
+    val workflowExecution : WorkflowExecution =
+      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, ExecutionEngine(4))
 
     executeWorkflowStep(workflowExecution)
 
     workflowExecution.workflowContext.ctx.contains("scraped_result") shouldBe true
-    workflowExecution.currentState.contains(TokenizeWebpageStep) shouldBe true
+    workflowExecution.currentState.contains(ParseWebpageStep) shouldBe true
+  }
+
+  it should "complete full crawl workflow execution" in {
+    val url : String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
+    val engine: ExecutionEngine = ExecutionEngine(4)
+
+    val workflowExecution : WorkflowExecution =
+      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, engine)
+
+    executeEntireWorkflow(workflowExecution)
+
+    workflowExecution.workflowContext.ctx.contains("extracted_urls") shouldBe true
+
+    // TODO : Chadnge this to use shouldBe also download an html page specifically to fetch
+    assert(workflowExecution.workflowContext.ctx("extracted_urls").asInstanceOf[List[String]].length > 0)
   }
 }
