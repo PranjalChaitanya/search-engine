@@ -4,13 +4,19 @@ import crawler.concurrency.AsyncQueue
 
 class ExecutionThread(taskQueue : AsyncQueue[() => Unit]) {
   private val executor : Executor = Executor(taskQueue)
-  private var running : Boolean = false
+  @volatile private var running : Boolean = false
+
+  private val thread: Thread = new Thread(() => runLoop())
 
   def shutDown(): Unit = (running = false)
 
   def startThread() : Unit = {
     running = true
-    while(running) {
+    thread.start()
+  }
+
+  def runLoop() : Unit = {
+    while (running) {
       executor.executionFromQueue()
     }
   }
