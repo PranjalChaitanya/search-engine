@@ -17,13 +17,6 @@ case object FetchWebpageStep extends WorkflowStep {
     Logger.log(s"Workflow started with UUID $loggingUUID on URL : $webpageURL")
 
     markURLAsSeen(webpageURL)
-//    markURLAsSeen(webpageURL) match {
-//      case true =>
-//        Logger.log(s"Workflow UUID $loggingUUID: Will execute workflow on $webpageURL")
-//      case false =>
-//        Logger.log(s"Workflow UUID $loggingUUID: Will not execute workflow on $webpageURL")
-//        return WorkflowFailure
-//    }
 
     val scrapeResult : String = scrapeWebpage(input.ctx("webpage_url").toString) match {
       case Some(s) =>
@@ -51,6 +44,7 @@ case object ParseWebpageStep extends WorkflowStep {
 
     val parsedResult : List[DOMObject] = parseHTML(scrapedResult) // TODO : Add more robust error handling
     input.ctx.put("parsed_html", parsedResult)
+
     input.ctx.remove("scraped_result") // removing it since it's no longer needed and just uses memory
 
     Logger.log(s"Workflow UUID $loggingUUID: Successfully parsed result")

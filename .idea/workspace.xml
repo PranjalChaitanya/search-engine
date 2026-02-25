@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/Config.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/Logger.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/FileTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/FileTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
-    </list>
+    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -287,7 +277,7 @@
       <workItem from="1771910413724" duration="2970000" />
       <workItem from="1771953659303" duration="5390000" />
       <workItem from="1771961874330" duration="17853000" />
-      <workItem from="1772039464076" duration="3633000" />
+      <workItem from="1772039464076" duration="3955000" />
     </task>
     <servers />
   </component>
