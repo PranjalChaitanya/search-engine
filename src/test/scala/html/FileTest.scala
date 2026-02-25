@@ -13,12 +13,5 @@ object FileTest extends Runnable {
     val fileContents: String = Using(Source.fromFile(filename)) { source =>
       source.mkString
     }.getOrElse("")
-
-//    println(HTMLParser.parseHTML(fileContents))
-//    println(extractURL(fileContents))
-
-
-//    println(fileContents)
-//    println(HTMLTokenizer.tokenize(fileContents))
   }
 }

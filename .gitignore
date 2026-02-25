@@ -47,3 +47,5 @@ build/
 .bsp/
 
 src/test/scala/html/Sample.txt
+
+/src/main/scala/crawler/logs

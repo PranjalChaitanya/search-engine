@@ -31,7 +31,6 @@ def executeWorkflowStep(workflowExecution: WorkflowExecution): Unit = {
 }
 
 def executeEntireWorkflow(workflowExecution: WorkflowExecution) : Unit = {
-  println(workflowExecution.currentState)
   val currentState: WorkflowStep = workflowExecution.currentState.getOrElse(return)
 
   // Calls each step until we eventually reach None
