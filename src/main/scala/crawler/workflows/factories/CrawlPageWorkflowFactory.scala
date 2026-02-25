@@ -14,12 +14,6 @@ object CrawlPageWorkflowFactory {
   }
 
   def createCrawlPageWorkflowExecutionCallback(url: String, engine: ExecutionEngine) : (() => Unit) = {
-    println("Callback")
-    println("URL")
-    println("Engine")
-    println(url)
-    println(engine)
-    
     () => {
       val workflowExecution: WorkflowExecution =
         CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, engine)

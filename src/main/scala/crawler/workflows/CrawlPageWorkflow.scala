@@ -8,12 +8,13 @@ import crawler.workflows.factories.CrawlPageWorkflowFactory.createCrawlPageWorkf
 
 case object FetchWebpageStep extends WorkflowStep {
   override def run(input: WorkflowContext): StepResult = {
-    println("Webpage link")
-    println(input.ctx("webpage_url").toString)
-
     markURLAsSeen(input.ctx("webpage_url").toString)
 
-    val scrapeResult : String = scrapeWebpage(input.ctx("webpage_url").toString)
+    val scrapeResult : String = scrapeWebpage(input.ctx("webpage_url").toString) match {
+      case Some(s) => s.toString
+      case None =>
+        return WorkflowFailure
+    }
     input.ctx.put("scraped_result", scrapeResult)
 
     WorkflowSuccess
