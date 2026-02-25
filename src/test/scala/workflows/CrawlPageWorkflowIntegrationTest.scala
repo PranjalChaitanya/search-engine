@@ -13,12 +13,13 @@ class CrawlPageWorkflowIntegrationTest extends AnyFlatSpec with Matchers {
 
   engine.start()
 
-  val workflowExecution: WorkflowExecution =
-    CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, engine)
-
   engine.submitJob(createCrawlPageWorkflowExecutionCallback(url, engine))
 
-  Thread.sleep(1)
+  println("JOBS RUN BEFORE SLEEP")
+
+  Thread.sleep(5000)
+
+  println("JOBS RUN AFTER SLEEP")
 
   engine.shutdown()
 }

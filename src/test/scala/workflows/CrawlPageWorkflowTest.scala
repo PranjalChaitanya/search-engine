@@ -34,7 +34,7 @@ class CrawlPageWorkflowTest extends AnyFlatSpec with Matchers {
   }
 
   it should "complete full crawl workflow execution" in {
-    val url : String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
+    val url : String = "https://www.databricks.com/blog/announcing-full-apache-iceberg-support-databricks"
     val engine: ExecutionEngine = ExecutionEngine(4)
 
     val workflowExecution : WorkflowExecution =

@@ -15,7 +15,7 @@ class Executor(taskQueue : AsyncQueue[() => Unit]) {
       case FutureState.READY(data: (() => Unit)) =>
         data()
       case FutureState.PENDING =>
-        ()
+        return
     }
   }
 }

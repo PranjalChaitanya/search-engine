@@ -2,15 +2,18 @@ package crawler.workflows
 
 import crawler.core.{StepResult, Workflow, WorkflowContext, WorkflowExecution, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition, executeEntireWorkflow}
 import crawler.engine.ExecutionEngine
-import crawler.html.{DOMObject, createURL, extractURL, parseHTML}
+import crawler.html.{DOMObject, extractURL, markURLAsSeen, normalizeAndFilterURLs, parseHTML}
 import crawler.scraper.scrapeWebpage
-import crawler.workflows.factories.CrawlPageWorkflowFactory
 import crawler.workflows.factories.CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback
 
 case object FetchWebpageStep extends WorkflowStep {
   override def run(input: WorkflowContext): StepResult = {
+    println("Webpage link")
+    println(input.ctx("webpage_url").toString)
+
+    markURLAsSeen(input.ctx("webpage_url").toString)
+
     val scrapeResult : String = scrapeWebpage(input.ctx("webpage_url").toString)
-    // TODO : Handle error cases. scrapeWebpage currently "never fails"
     input.ctx.put("scraped_result", scrapeResult)
 
     WorkflowSuccess
@@ -66,14 +69,12 @@ case object SubmitNewJobsStep extends WorkflowStep {
 
     val webpageURL : String = input.ctx("webpage_url").toString
 
-    val newURLS = extractedURLs.map(url => {
-      createURL(url, webpageURL)
-    })
-    
-    extractedURLs.foreach(url => {
-      executionEngine.submitJob(() => {
-        createCrawlPageWorkflowExecutionCallback(createURL(url, webpageURL), executionEngine)
-      })
+    val normalizedURLs: List[String] = normalizeAndFilterURLs(extractedURLs, webpageURL)
+
+    normalizedURLs.foreach(url => {
+      executionEngine.submitJob(
+        createCrawlPageWorkflowExecutionCallback(url, executionEngine)
+      )
     })
 
     WorkflowSuccess
@@ -82,7 +83,7 @@ case object SubmitNewJobsStep extends WorkflowStep {
 
 class CrawlPageWorkflow extends Workflow {
   override val startingStep: WorkflowStep = FetchWebpageStep
-  
+
   override val transitions: Map[WorkflowStep, WorkflowTransition] = Map(
     FetchWebpageStep -> WorkflowTransition(
       onSuccess = Some(ParseWebpageStep),

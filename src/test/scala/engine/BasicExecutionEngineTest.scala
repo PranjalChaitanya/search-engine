@@ -32,4 +32,37 @@ class BasicExecutionEngineTest extends AnyFlatSpec with Matchers {
 
     executionEngine.shutdown()
   }
+
+  it should "handle jobs that create more jobs" in {
+    val executionEngine: ExecutionEngine = ExecutionEngine(4)
+    val results = TrieMap.empty[Int, Int]
+
+    executionEngine.start()
+
+    // Parent jobs
+    (0 until 20).foreach { parent =>
+      executionEngine.submitJob(() => {
+
+        // mark parent executed
+        results.put(parent, 1)
+
+        // each parent spawns 5 child jobs
+        (0 until 5).foreach { child =>
+          val childId = 1000 + parent * 10 + child
+
+          executionEngine.submitJob(() => {
+            results.put(childId, 1)
+          })
+        }
+      })
+    }
+
+    eventually {
+      // 20 parents + (20 * 5) children
+      results.size shouldBe 120
+      all(results.values) shouldBe 1
+    }
+
+    executionEngine.shutdown()
+  }
 }

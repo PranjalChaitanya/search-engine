@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/scala/url/URLCreation.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionEngine.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/engine/ExecutionEngine.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/engine/Executor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/engine/Executor.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/scraper/URLScraper.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/scraper/URLScraper.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/engine/BasicExecutionEngineTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/engine/BasicExecutionEngineTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +55,8 @@
     "ScalaTest.BasicExecutionEngineTest.executor": "Run",
     "ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs.executor": "Run",
     "ScalaTest.BasicExecutionEngineTest.should do basically nothing.executor": "Run",
-    "ScalaTest.CrawlPageWorkflowIntegrationTest.executor": "Debug",
+    "ScalaTest.BasicExecutionEngineTest.should handle jobs that create more jobs.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowIntegrationTest.executor": "Run",
     "ScalaTest.CrawlPageWorkflowTest.executor": "Run",
     "ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution.executor": "Run",
     "ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition in success path.executor": "Run",
@@ -85,7 +90,66 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution">
+  <component name="RunManager" selected="ScalaTest.CrawlPageWorkflowIntegrationTest">
+    <configuration name="BasicExecutionEngineTest.should handle jobs that create more jobs" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Test name" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="engine.BasicExecutionEngineTest" />
+      <option name="testName" value="should handle jobs that create more jobs" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CrawlPageWorkflowIntegrationTest" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Class" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="workflows.CrawlPageWorkflowIntegrationTest" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CrawlPageWorkflowTest.should complete full crawl workflow execution" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
@@ -176,73 +240,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="URLCreation.should recognize absolute URL" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Test name" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="url.URLCreation" />
-      <option name="testName" value="should recognize absolute URL" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="URLCreation.should recognize relative URL" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Test name" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="url.URLCreation" />
-      <option name="testName" value="should recognize relative URL" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="ScalaTest.CrawlPageWorkflowIntegrationTest" />
         <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution" />
+        <item itemvalue="ScalaTest.BasicExecutionEngineTest.should handle jobs that create more jobs" />
         <item itemvalue="ScalaTest.URLCreation.should create relative URL" />
         <item itemvalue="ScalaTest.URLCreation.should create absolute URL" />
-        <item itemvalue="ScalaTest.URLCreation.should recognize absolute URL" />
-        <item itemvalue="ScalaTest.URLCreation.should recognize relative URL" />
       </list>
     </recent_temporary>
   </component>
@@ -284,28 +288,12 @@
       <workItem from="1771377004540" duration="6312000" />
       <workItem from="1771910413724" duration="2970000" />
       <workItem from="1771953659303" duration="5390000" />
-      <workItem from="1771961874330" duration="12605000" />
+      <workItem from="1771961874330" duration="17530000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala</url>
-          <line>24</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala</url>
-          <line>49</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
