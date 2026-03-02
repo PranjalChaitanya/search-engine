@@ -66,7 +66,8 @@ private val blockedParams: Set[String] = Set(
   "session",
   "printable",
   "view",
-  "sort"
+  "sort",
+  "id"
 )
 
 private def parseQuery(query: String): List[(String, String)] =

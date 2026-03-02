@@ -1,14 +1,13 @@
 package workflows
 
-import crawler.core.{Config, WorkflowExecution}
+import crawler.core.Config
 import crawler.engine.ExecutionEngine
-import crawler.workflows.factories.CrawlPageWorkflowFactory
 import crawler.workflows.factories.CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class CrawlPageWorkflowIntegrationTest extends AnyFlatSpec with Matchers {
-  val url: String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
+  val url: String = "https://news.ycombinator.com"
   val engine: ExecutionEngine = ExecutionEngine(Config.executionEngineExecutorThreads)
 
   engine.start()

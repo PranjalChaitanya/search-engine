@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="" />
+    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -278,6 +282,7 @@
       <workItem from="1771953659303" duration="5390000" />
       <workItem from="1771961874330" duration="17853000" />
       <workItem from="1772039464076" duration="3955000" />
+      <workItem from="1772060164385" duration="25000" />
     </task>
     <servers />
   </component>
