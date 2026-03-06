@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="" />
+    <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +16,14 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Package Object" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -30,85 +40,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.hello.executor&quot;: &quot;Run&quot;,
-    &quot;Application.mainFunc.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.AsyncQueueSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.BasicExecutionEngineTest.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.BasicExecutionEngineTest.should do basically nothing.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.BasicExecutionEngineTest.should handle jobs that create more jobs.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition in success path.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.CrawlPageWorkflowTest.should properly execute and create a workflow execution.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLParserSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLTagExtractorSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLTokenizerSpec.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.URLCreation.should create absolute URL.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.URLCreation.should create new URL from relative URL.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.URLCreation.should create relative URL.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.URLCreation.should recognize absolute URL.executor&quot;: &quot;Run&quot;,
-    &quot;ScalaTest.URLCreation.should recognize relative URL.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.hello.executor": "Run",
+    "Application.mainFunc.executor": "Run",
+    "Application.run.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ScalaTest.AsyncQueueSpec.AsyncQueue should not crash when pop is polled repeatedly.executor": "Run",
+    "ScalaTest.AsyncQueueSpec.executor": "Run",
+    "ScalaTest.BasicExecutionEngineTest.executor": "Run",
+    "ScalaTest.BasicExecutionEngineTest.should basic engine test handling basic jobs.executor": "Run",
+    "ScalaTest.BasicExecutionEngineTest.should do basically nothing.executor": "Run",
+    "ScalaTest.BasicExecutionEngineTest.should handle jobs that create more jobs.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowIntegrationTest.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition in success path.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.should fetch a page and transition.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.should properly execute a single step and create a workflow execution.executor": "Run",
+    "ScalaTest.CrawlPageWorkflowTest.should properly execute and create a workflow execution.executor": "Run",
+    "ScalaTest.HTMLParserSpec.executor": "Run",
+    "ScalaTest.HTMLParserSpec.parseHTML should parse realistic HTML structure correctly.executor": "Run",
+    "ScalaTest.HTMLTagExtractorSpec.executor": "Run",
+    "ScalaTest.HTMLTokenizerSpec.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract url on nested tag.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract url on single tag.executor": "Run",
+    "ScalaTest.HTMLURLExtractorTest.should extract urls from basic general html.executor": "Run",
+    "ScalaTest.PolitenessManagerSpec.PolitenessManager.secondsUntilNextCrawl should return a positive value immediately after a visit.executor": "Run",
+    "ScalaTest.PolitenessManagerSpec.executor": "Run",
+    "ScalaTest.RobotsTxtParserSpec.RobotsTxtParser.parse should return empty rules for an empty file.executor": "Run",
+    "ScalaTest.RobotsTxtParserSpec.executor": "Run",
+    "ScalaTest.URLCreation.should create absolute URL.executor": "Run",
+    "ScalaTest.URLCreation.should create new URL from relative URL.executor": "Run",
+    "ScalaTest.URLCreation.should create relative URL.executor": "Run",
+    "ScalaTest.URLCreation.should recognize absolute URL.executor": "Run",
+    "ScalaTest.URLCreation.should recognize relative URL.executor": "Run",
+    "git-widget-placeholder": "revampled-queue-system",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="ScalaTest.CrawlPageWorkflowIntegrationTest">
-    <configuration name="BasicExecutionEngineTest.should handle jobs that create more jobs" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <module name="search-engine" />
-      <option name="VMParameters" value="" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="alternativeJrePath" />
-      <option name="alternativeJrePathEnabled" value="false" />
-      <option name="classpathModifications">
-        <list />
-      </option>
-      <option name="envFilePaths">
-        <list />
-      </option>
-      <option name="envs">
-        <map />
-      </option>
-      <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
-      <option name="projectPathOnTarget" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="testKind" value="Test name" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="engine.BasicExecutionEngineTest" />
-      <option name="testName" value="should handle jobs that create more jobs" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+}]]></component>
+  <component name="RunManager" selected="ScalaTest.PolitenessManagerSpec">
     <configuration name="CrawlPageWorkflowIntegrationTest" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
@@ -138,7 +122,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CrawlPageWorkflowTest.should complete full crawl workflow execution" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <configuration name="PolitenessManagerSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
       <option name="allowRunningInParallel" value="false" />
@@ -159,16 +143,15 @@
       <option name="selectedOptions">
         <list />
       </option>
-      <option name="testKind" value="Test name" />
+      <option name="testKind" value="Class" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="workflows.CrawlPageWorkflowTest" />
-      <option name="testName" value="should complete full crawl workflow execution" />
+      <option name="testClassPath" value="politeness.PolitenessManagerSpec" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="URLCreation.should create absolute URL" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <configuration name="PolitenessManagerSpec.PolitenessManager.secondsUntilNextCrawl should return a positive value immediately after a visit" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
       <option name="allowRunningInParallel" value="false" />
@@ -191,14 +174,43 @@
       </option>
       <option name="testKind" value="Test name" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="url.URLCreation" />
-      <option name="testName" value="should create absolute URL" />
+      <option name="testClassPath" value="politeness.PolitenessManagerSpec" />
+      <option name="testName" value="PolitenessManager.secondsUntilNextCrawl should return a positive value immediately after a visit" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="URLCreation.should create relative URL" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <configuration name="RobotsTxtParserSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <module name="search-engine" />
+      <option name="VMParameters" value="" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="classpathModifications">
+        <list />
+      </option>
+      <option name="envFilePaths">
+        <list />
+      </option>
+      <option name="envs">
+        <map />
+      </option>
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="testKind" value="Class" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <option name="testClassPath" value="politeness.RobotsTxtParserSpec" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RobotsTxtParserSpec.RobotsTxtParser.parse should return empty rules for an empty file" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="search-engine" />
       <option name="VMParameters" value="" />
       <option name="allowRunningInParallel" value="false" />
@@ -221,8 +233,8 @@
       </option>
       <option name="testKind" value="Test name" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="testClassPath" value="url.URLCreation" />
-      <option name="testName" value="should create relative URL" />
+      <option name="testClassPath" value="politeness.RobotsTxtParserSpec" />
+      <option name="testName" value="RobotsTxtParser.parse should return empty rules for an empty file" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -230,11 +242,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="ScalaTest.PolitenessManagerSpec" />
+        <item itemvalue="ScalaTest.PolitenessManagerSpec.PolitenessManager.secondsUntilNextCrawl should return a positive value immediately after a visit" />
+        <item itemvalue="ScalaTest.RobotsTxtParserSpec" />
+        <item itemvalue="ScalaTest.RobotsTxtParserSpec.RobotsTxtParser.parse should return empty rules for an empty file" />
         <item itemvalue="ScalaTest.CrawlPageWorkflowIntegrationTest" />
-        <item itemvalue="ScalaTest.CrawlPageWorkflowTest.should complete full crawl workflow execution" />
-        <item itemvalue="ScalaTest.BasicExecutionEngineTest.should handle jobs that create more jobs" />
-        <item itemvalue="ScalaTest.URLCreation.should create relative URL" />
-        <item itemvalue="ScalaTest.URLCreation.should create absolute URL" />
       </list>
     </recent_temporary>
   </component>
@@ -278,11 +290,25 @@
       <workItem from="1771953659303" duration="5390000" />
       <workItem from="1771961874330" duration="17853000" />
       <workItem from="1772039464076" duration="3955000" />
+      <workItem from="1772060164385" duration="25000" />
+      <workItem from="1772481644898" duration="8336000" />
+      <workItem from="1772823853302" duration="1195000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
