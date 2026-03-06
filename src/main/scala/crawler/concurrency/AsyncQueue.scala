@@ -8,7 +8,7 @@ import scala.collection.mutable.Queue
 class AsyncQueue[A] {
   private val items : Queue[A] = new mutable.Queue[A]()
   private val waiters : Queue[(() => Unit)] = new mutable.Queue[() => Unit]()
-  private val lock = AnyRef
+  private val lock = new AnyRef
 
   def push(item : A): Unit = lock.synchronized {
     items.enqueue(item)

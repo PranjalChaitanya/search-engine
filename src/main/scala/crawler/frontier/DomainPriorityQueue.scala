@@ -4,7 +4,8 @@ import java.time.LocalDateTime
 import scala.collection.mutable.PriorityQueue
 
 object DomainPriorityQueue {
-  val pq : PriorityQueue[(LocalDateTime, String)] = new PriorityQueue[(LocalDateTime, String)]()
+  val pq : PriorityQueue[(LocalDateTime, String)] =
+    PriorityQueue.empty[(LocalDateTime, String)](Ordering[(LocalDateTime, String)].reverse)
 
   def addDomain(domain: String, nextCrawlableTime: LocalDateTime) = synchronized {
     pq.addOne((nextCrawlableTime, domain))

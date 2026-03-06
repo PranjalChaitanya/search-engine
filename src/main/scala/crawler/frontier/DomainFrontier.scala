@@ -26,12 +26,12 @@ object DomainFrontier {
     }
     
     urlList.headOption match {
-      case Some(domain) => {
+      case Some(url) => {
         domainFrontierMap.update(
           domain,
           urlList.tail
         )
-        Some(domain)
+        Some(url)
       }
       case None => return None
     }

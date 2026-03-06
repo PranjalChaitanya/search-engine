@@ -1,8 +1,7 @@
 package crawler.core
 
-class WorkflowExecution(workflow: Workflow) {
+class WorkflowExecution(val workflowDefinition: Workflow) {
   // Can optimize this by using a string and looking up a workflow. Bad if you have thousands of copies
-  val workflowDefinition: Workflow = workflow
   val workflowContext: WorkflowContext = WorkflowContext()
 
   var currentState: Option[WorkflowStep] = Some(workflowDefinition.startingStep)
@@ -31,9 +30,9 @@ def executeWorkflowStep(workflowExecution: WorkflowExecution): Unit = {
 }
 
 def executeEntireWorkflow(workflowExecution: WorkflowExecution) : Unit = {
-  val currentState: WorkflowStep = workflowExecution.currentState.getOrElse(return)
+  while (workflowExecution.currentState.nonEmpty) {
+    val currentState: WorkflowStep = workflowExecution.currentState.get
 
-  // Calls each step until we eventually reach None
-  executeWorkflowStep(workflowExecution)
-  executeEntireWorkflow(workflowExecution)
+    executeWorkflowStep(workflowExecution)
+  }
 }
