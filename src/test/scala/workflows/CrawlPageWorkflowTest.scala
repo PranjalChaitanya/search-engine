@@ -1,8 +1,8 @@
 package workflows
 
-import crawler.core.{StepResult, WorkflowContext, WorkflowExecution, WorkflowStep, executeEntireWorkflow, executeWorkflowStep}
+import crawler.core.{WorkflowExecution, executeEntireWorkflow, executeWorkflowStep}
 import crawler.engine.ExecutionEngine
-import crawler.workflows.{FetchWebpageStep, ParseWebpageStep}
+import crawler.workflows.{CrawlPageContext, FetchWebpageStep, ParseWebpageStep}
 import crawler.workflows.factories.CrawlPageWorkflowFactory
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -10,41 +10,35 @@ import org.scalatest.matchers.should.Matchers
 // Workflows are usually definitions, so testing workflows is usually not worthwhile. However, the purpose of this test
 // is to test the core classes like Workflow and WorkflowExecution and all the related classes
 class CrawlPageWorkflowTest extends AnyFlatSpec with Matchers {
-  // Can't really test the contents of what you scrape because it changes
+
   it should "fetch a page and transition in success path" in {
-    val workflowContext : WorkflowContext = WorkflowContext()
+    val ctx = CrawlPageContext("https://en.wikipedia.org/wiki/Apache_Iceberg", ExecutionEngine(4))
 
-    workflowContext.ctx.put("webpage_url", "https://en.wikipedia.org/wiki/Apache_Iceberg")
+    val result = FetchWebpageStep.run(ctx)
 
-    val outcomeResult: StepResult = FetchWebpageStep.run(workflowContext)
-
-    workflowContext.ctx.contains("scraped_result") shouldBe true
-    workflowContext.ctx("scraped_result").toString.nonEmpty shouldBe true
+    ctx.scrapedResult.isDefined shouldBe true
+    ctx.scrapedResult.get.nonEmpty shouldBe true
   }
 
   it should "properly execute a single step and create a workflow execution" in {
-    val url : String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
-    val workflowExecution : WorkflowExecution =
+    val url = "https://en.wikipedia.org/wiki/Apache_Iceberg"
+    val execution: WorkflowExecution[CrawlPageContext] =
       CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, ExecutionEngine(4))
 
-    executeWorkflowStep(workflowExecution)
+    executeWorkflowStep(execution)
 
-    workflowExecution.workflowContext.ctx.contains("scraped_result") shouldBe true
-    workflowExecution.currentState.contains(ParseWebpageStep) shouldBe true
+    execution.context.scrapedResult.isDefined shouldBe true
+    execution.currentState.contains(ParseWebpageStep) shouldBe true
   }
 
   it should "complete full crawl workflow execution" in {
-    val url : String = "https://www.databricks.com/blog/announcing-full-apache-iceberg-support-databricks"
-    val engine: ExecutionEngine = ExecutionEngine(4)
+    val url = "https://www.databricks.com/blog/announcing-full-apache-iceberg-support-databricks"
+    val execution: WorkflowExecution[CrawlPageContext] =
+      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, ExecutionEngine(4))
 
-    val workflowExecution : WorkflowExecution =
-      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecution(url, engine)
+    executeEntireWorkflow(execution)
 
-    executeEntireWorkflow(workflowExecution)
-
-    workflowExecution.workflowContext.ctx.contains("extracted_urls") shouldBe true
-
-    // TODO : Chadnge this to use shouldBe also download an html page specifically to fetch
-    assert(workflowExecution.workflowContext.ctx("extracted_urls").asInstanceOf[List[String]].length > 0)
+    execution.context.extractedUrls.isDefined shouldBe true
+    execution.context.extractedUrls.get.length should be > 0
   }
 }

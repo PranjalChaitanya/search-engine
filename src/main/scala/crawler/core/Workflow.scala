@@ -1,25 +1,19 @@
 package crawler.core
 
-import scala.collection.concurrent.TrieMap
-
 sealed trait StepResult
 case object WorkflowSuccess extends StepResult
 case object WorkflowFailure extends StepResult
 
-case class WorkflowTransition(
-  onSuccess : Option[WorkflowStep],
-  onFailure : Option[WorkflowStep]
+case class WorkflowTransition[C](
+  onSuccess: Option[WorkflowStep[C]],
+  onFailure: Option[WorkflowStep[C]]
 )
 
-class WorkflowContext() {
-  val ctx: TrieMap[String, Any] = TrieMap.empty
+trait WorkflowStep[C] {
+  def run(input: C): StepResult
 }
 
-trait WorkflowStep {
-  def run(input: WorkflowContext) : StepResult
-}
-
-trait Workflow {
-  val startingStep: WorkflowStep
-  val transitions: Map[WorkflowStep, WorkflowTransition]
+trait Workflow[C] {
+  val startingStep: WorkflowStep[C]
+  val transitions: Map[WorkflowStep[C], WorkflowTransition[C]]
 }

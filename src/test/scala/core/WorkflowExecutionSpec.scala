@@ -3,7 +3,6 @@ package core
 import crawler.core.{
   StepResult,
   Workflow,
-  WorkflowContext,
   WorkflowExecution,
   WorkflowFailure,
   WorkflowStep,
@@ -17,107 +16,112 @@ import org.scalatest.matchers.should.Matchers
 
 class WorkflowExecutionSpec extends AnyFlatSpec with Matchers {
 
-  case class RecordingStep(name: String, result: StepResult, ran: scala.collection.mutable.ListBuffer[String]) extends WorkflowStep {
-    override def run(input: WorkflowContext): StepResult = {
-      ran += name
-      input.ctx.put(s"ran-$name", true)
+  // Minimal typed context for tests — just tracks which steps ran
+  class TestContext {
+    val ran: scala.collection.mutable.ListBuffer[String] = scala.collection.mutable.ListBuffer.empty
+  }
+
+  case class RecordingStep(name: String, result: StepResult) extends WorkflowStep[TestContext] {
+    override def run(input: TestContext): StepResult = {
+      input.ran += name
       result
     }
   }
 
   "executeWorkflowStep" should "advance to success transition when step succeeds" in {
-    val ran = scala.collection.mutable.ListBuffer.empty[String]
-    val step1 = RecordingStep("step1", WorkflowSuccess, ran)
-    val step2 = RecordingStep("step2", WorkflowSuccess, ran)
+    val step1 = RecordingStep("step1", WorkflowSuccess)
+    val step2 = RecordingStep("step2", WorkflowSuccess)
 
-    val workflow = new Workflow {
-      override val startingStep: WorkflowStep = step1
-      override val transitions: Map[WorkflowStep, WorkflowTransition] = Map(
+    val workflow = new Workflow[TestContext] {
+      override val startingStep: WorkflowStep[TestContext] = step1
+      override val transitions: Map[WorkflowStep[TestContext], WorkflowTransition[TestContext]] = Map(
         step1 -> WorkflowTransition(Some(step2), None),
         step2 -> WorkflowTransition(None, None)
       )
     }
 
-    val execution = new WorkflowExecution(workflow)
+    val ctx = TestContext()
+    val execution = WorkflowExecution(workflow, ctx)
     executeWorkflowStep(execution)
 
-    ran.toList shouldBe List("step1")
+    ctx.ran.toList shouldBe List("step1")
     execution.currentState shouldBe Some(step2)
-    execution.workflowContext.ctx.contains("ran-step1") shouldBe true
   }
 
   it should "advance to failure transition when step fails" in {
-    val ran = scala.collection.mutable.ListBuffer.empty[String]
-    val step1 = RecordingStep("step1", WorkflowFailure, ran)
-    val fallback = RecordingStep("fallback", WorkflowSuccess, ran)
+    val step1    = RecordingStep("step1", WorkflowFailure)
+    val fallback = RecordingStep("fallback", WorkflowSuccess)
 
-    val workflow = new Workflow {
-      override val startingStep: WorkflowStep = step1
-      override val transitions: Map[WorkflowStep, WorkflowTransition] = Map(
-        step1 -> WorkflowTransition(None, Some(fallback)),
+    val workflow = new Workflow[TestContext] {
+      override val startingStep: WorkflowStep[TestContext] = step1
+      override val transitions: Map[WorkflowStep[TestContext], WorkflowTransition[TestContext]] = Map(
+        step1    -> WorkflowTransition(None, Some(fallback)),
         fallback -> WorkflowTransition(None, None)
       )
     }
 
-    val execution = new WorkflowExecution(workflow)
+    val ctx = TestContext()
+    val execution = WorkflowExecution(workflow, ctx)
     executeWorkflowStep(execution)
 
     execution.currentState shouldBe Some(fallback)
-    ran.toList shouldBe List("step1")
+    ctx.ran.toList shouldBe List("step1")
   }
 
   it should "stop the workflow if a transition is missing for the current step" in {
-    val ran = scala.collection.mutable.ListBuffer.empty[String]
-    val lonelyStep = RecordingStep("lonely", WorkflowSuccess, ran)
+    val lonelyStep = RecordingStep("lonely", WorkflowSuccess)
 
-    val workflow = new Workflow {
-      override val startingStep: WorkflowStep = lonelyStep
-      override val transitions: Map[WorkflowStep, WorkflowTransition] = Map.empty
+    val workflow = new Workflow[TestContext] {
+      override val startingStep: WorkflowStep[TestContext] = lonelyStep
+      override val transitions: Map[WorkflowStep[TestContext], WorkflowTransition[TestContext]] = Map.empty
     }
 
-    val execution = new WorkflowExecution(workflow)
+    val ctx = TestContext()
+    val execution = WorkflowExecution(workflow, ctx)
     executeWorkflowStep(execution)
 
-    ran.toList shouldBe List("lonely")
+    ctx.ran.toList shouldBe List("lonely")
     execution.currentState shouldBe None
   }
 
   it should "do nothing when the workflow is already complete" in {
-    val ran = scala.collection.mutable.ListBuffer.empty[String]
-    val step = RecordingStep("step", WorkflowSuccess, ran)
+    val step = RecordingStep("step", WorkflowSuccess)
 
-    val workflow = new Workflow {
-      override val startingStep: WorkflowStep = step
-      override val transitions: Map[WorkflowStep, WorkflowTransition] = Map(step -> WorkflowTransition(None, None))
+    val workflow = new Workflow[TestContext] {
+      override val startingStep: WorkflowStep[TestContext] = step
+      override val transitions: Map[WorkflowStep[TestContext], WorkflowTransition[TestContext]] = Map(
+        step -> WorkflowTransition(None, None)
+      )
     }
 
-    val execution = new WorkflowExecution(workflow)
+    val ctx = TestContext()
+    val execution = WorkflowExecution(workflow, ctx)
     execution.currentState = None
 
     executeWorkflowStep(execution)
 
-    ran shouldBe empty
+    ctx.ran shouldBe empty
   }
 
   "executeEntireWorkflow" should "run all steps until terminal state" in {
-    val ran = scala.collection.mutable.ListBuffer.empty[String]
-    val step1 = RecordingStep("step1", WorkflowSuccess, ran)
-    val step2 = RecordingStep("step2", WorkflowSuccess, ran)
-    val step3 = RecordingStep("step3", WorkflowSuccess, ran)
+    val step1 = RecordingStep("step1", WorkflowSuccess)
+    val step2 = RecordingStep("step2", WorkflowSuccess)
+    val step3 = RecordingStep("step3", WorkflowSuccess)
 
-    val workflow = new Workflow {
-      override val startingStep: WorkflowStep = step1
-      override val transitions: Map[WorkflowStep, WorkflowTransition] = Map(
+    val workflow = new Workflow[TestContext] {
+      override val startingStep: WorkflowStep[TestContext] = step1
+      override val transitions: Map[WorkflowStep[TestContext], WorkflowTransition[TestContext]] = Map(
         step1 -> WorkflowTransition(Some(step2), None),
         step2 -> WorkflowTransition(Some(step3), None),
         step3 -> WorkflowTransition(None, None)
       )
     }
 
-    val execution = new WorkflowExecution(workflow)
+    val ctx = TestContext()
+    val execution = WorkflowExecution(workflow, ctx)
     executeEntireWorkflow(execution)
 
-    ran.toList shouldBe List("step1", "step2", "step3")
+    ctx.ran.toList shouldBe List("step1", "step2", "step3")
     execution.currentState shouldBe None
   }
 }
