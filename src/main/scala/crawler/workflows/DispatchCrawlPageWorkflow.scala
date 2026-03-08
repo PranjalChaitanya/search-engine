@@ -3,7 +3,6 @@ package crawler.workflows
 import crawler.core.{StepResult, Workflow, WorkflowContext, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition}
 import crawler.engine.ExecutionEngine
 import crawler.frontier.{DomainFrontier, DomainPriorityQueue}
-import crawler.workflows.factories.{CrawlPageWorkflowFactory, DispatchCrawlPageWorkflowFactory}
 
 import java.time.LocalDateTime
 
@@ -38,13 +37,6 @@ case object SubmitNewWorkflowsStep extends WorkflowStep {
       case None =>
         return WorkflowFailure
     }
-
-    urlList.foreach(url => {
-      executionEngine.submitJob(CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, executionEngine))
-    })
-
-    executionEngine
-      .submitJob(DispatchCrawlPageWorkflowFactory.createDispatchCrawlPageWorkflowExecutionCallback(executionEngine))
 
     WorkflowSuccess
   }
