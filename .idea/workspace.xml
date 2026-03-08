@@ -5,16 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/Workflow.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/core/WorkflowExecution.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainFrontier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainFrontier.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainPriorityQueue.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainPriorityQueue.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/scheduler/tasks/FrontierCrawlTask.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/scheduler/tasks/FrontierCrawlTask.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/DispatchCrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/DispatchCrawlPageWorkflow.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/DispatchCrawlPageWorkflowFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/DispatchCrawlPageWorkflowFactory.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/core/WorkflowExecutionSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/core/WorkflowExecutionSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/frontier/DomainFrontierTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/frontier/DomainFrontierTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/frontier/DomainPriorityQueueTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/frontier/DomainPriorityQueueTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/html/URLNormalizationSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/URLNormalizationSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +97,7 @@
     "ScalaTest.URLCreation.should recognize absolute URL.executor": "Run",
     "ScalaTest.URLCreation.should recognize relative URL.executor": "Run",
     "ScalaTest.WorkflowExecutionSpec.executor": "Run",
-    "git-widget-placeholder": "refactor-workflow-context",
+    "git-widget-placeholder": "swapping__singletons",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -310,7 +313,7 @@
       <workItem from="1772481644898" duration="8336000" />
       <workItem from="1772823853302" duration="6560000" />
       <workItem from="1772911040818" duration="836000" />
-      <workItem from="1772925879222" duration="4490000" />
+      <workItem from="1772925879222" duration="6273000" />
     </task>
     <servers />
   </component>

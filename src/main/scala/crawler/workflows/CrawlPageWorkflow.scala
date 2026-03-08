@@ -2,7 +2,7 @@ package crawler.workflows
 
 import crawler.core.{Logger, StepResult, Workflow, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition, executeEntireWorkflow}
 import crawler.engine.ExecutionEngine
-import crawler.html.{DOMObject, extractURL, markURLAsSeen, normalizeAndFilterURLs, parseHTML}
+import crawler.html.{DOMObject, SeenURLStore, CrawlURLState, extractURL, markURLAsSeen, normalizeAndFilterURLs, parseHTML}
 import crawler.scraper.scrapeWebpage
 import crawler.workflows.factories.CrawlPageWorkflowFactory
 
@@ -10,7 +10,8 @@ import java.util.UUID
 
 class CrawlPageContext(
   val webpageUrl: String,
-  val executionEngine: ExecutionEngine
+  val executionEngine: ExecutionEngine,
+  val seenURLs: SeenURLStore
 ) {
   val loggingUUID: String = UUID.randomUUID().toString
   var scrapedResult: Option[String] = None
@@ -21,7 +22,7 @@ class CrawlPageContext(
 case object FetchWebpageStep extends WorkflowStep[CrawlPageContext] {
   override def run(input: CrawlPageContext): StepResult = {
     Logger.log(s"Workflow started with UUID ${input.loggingUUID} on URL: ${input.webpageUrl}")
-    markURLAsSeen(input.webpageUrl)
+    markURLAsSeen(input.webpageUrl, input.seenURLs)
 
     scrapeWebpage(input.webpageUrl) match {
       case Some(html) =>
@@ -66,11 +67,11 @@ case object SubmitNewJobsStep extends WorkflowStep[CrawlPageContext] {
     input.extractedUrls match {
       case None => WorkflowFailure
       case Some(urls) =>
-        val normalizedURLs = normalizeAndFilterURLs(urls, input.webpageUrl)
+        val normalizedURLs = normalizeAndFilterURLs(urls, input.webpageUrl, input.seenURLs)
         Logger.log(s"Workflow UUID ${input.loggingUUID}: New list of normalized urls: ${normalizedURLs.toString()}")
         normalizedURLs.foreach(url =>
           input.executionEngine.submitJob(
-            CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, input.executionEngine)
+            CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, input.executionEngine, input.seenURLs)
           )
         )
         WorkflowSuccess
