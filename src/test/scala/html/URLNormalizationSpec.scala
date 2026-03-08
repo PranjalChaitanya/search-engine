@@ -1,6 +1,7 @@
 package html
 
 import crawler.html.{
+  CrawlURLState,
   canonicalizeURL,
   createURLFromRelative,
   extractRootURL,
@@ -47,14 +48,15 @@ class URLNormalizationSpec extends AnyFlatSpec with Matchers {
   }
 
   "markURLAsSeen" should "deduplicate repeated canonical URLs" in {
-    val unique = java.util.UUID.randomUUID().toString
-    val base = s"https://example.com/$unique"
+    val store = new CrawlURLState()
+    val base = s"https://example.com/${java.util.UUID.randomUUID()}"
 
-    markURLAsSeen(base) shouldBe true
-    markURLAsSeen(s"$base/") shouldBe false
+    markURLAsSeen(base, store) shouldBe true
+    markURLAsSeen(s"$base/", store) shouldBe false
   }
 
   "normalizeAndFilterURLs" should "normalize, filter and deduplicate links in-order" in {
+    val store = new CrawlURLState()
     val unique = java.util.UUID.randomUUID().toString
     val baseURL = s"https://example.com/root/$unique/index.html"
 
@@ -69,7 +71,8 @@ class URLNormalizationSpec extends AnyFlatSpec with Matchers {
         "mailto:test@example.com",                  // filtered
         "https://another.example.org/path"
       ),
-      baseURL
+      baseURL,
+      store
     )
 
     normalized shouldBe List(

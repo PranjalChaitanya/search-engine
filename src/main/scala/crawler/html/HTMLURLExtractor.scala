@@ -4,19 +4,6 @@ import java.net.URI
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.ConcurrentHashMap
-
-private object CrawlURLState {
-  private val seenUrls = ConcurrentHashMap.newKeySet[String]()
-
-  def markIfNew(url: String): Boolean = {
-    seenUrls.add(url)
-  }
-
-  def clear(): Unit = {
-    seenUrls.clear()
-  }
-}
 
 def isRelativeURL(url: String): Boolean = {
   val trimmed = url.trim
@@ -119,9 +106,7 @@ def canonicalizeURL(rawUrl: String): Option[String] = {
         .map(_.filterNot { case (k, _) =>
           blockedParams.contains(k.toLowerCase)
         })
-        // prevent parameter explosion
         .map(_.take(3))
-        // IMPORTANT: sort so param order doesn't matter
         .map(_.sortBy(_._1))
         .map(rebuildQuery)
         .filter(_.nonEmpty)
@@ -161,22 +146,21 @@ def isCrawlableLink(url: String): Boolean = {
     !trimmed.startsWith("data:")
 }
 
-def markURLAsSeen(rawUrl: String): Boolean = {
+def markURLAsSeen(rawUrl: String, store: SeenURLStore): Boolean = {
   canonicalizeURL(rawUrl) match {
-    case Some(url) => CrawlURLState.markIfNew(url)
+    case Some(url) => store.markIfNew(url)
     case None => false
   }
 }
 
-def normalizeAndFilterURLs(urls: List[String], baseURL: String): List[String] = {
+def normalizeAndFilterURLs(urls: List[String], baseURL: String, store: SeenURLStore): List[String] = {
   urls.foldLeft(List.empty[String]) { (acc, rawUrl) =>
     if (!isCrawlableLink(rawUrl)) acc
     else {
-      val maybeFinalUrl =
-        canonicalizeURL(createURL(rawUrl, baseURL))
+      val maybeFinalUrl = canonicalizeURL(createURL(rawUrl, baseURL))
 
       maybeFinalUrl match {
-        case Some(finalUrl) if CrawlURLState.markIfNew(finalUrl) =>
+        case Some(finalUrl) if store.markIfNew(finalUrl) =>
           acc :+ finalUrl
         case _ =>
           acc
@@ -184,6 +168,14 @@ def normalizeAndFilterURLs(urls: List[String], baseURL: String): List[String] = 
     }
   }
 }
+
+private def decodeHtmlEntities(s: String): String =
+  s.replace("&amp;", "&")
+   .replace("&lt;", "<")
+   .replace("&gt;", ">")
+   .replace("&quot;", "\"")
+   .replace("&apos;", "'")
+   .replace("&#39;", "'")
 
 def extractURL(domObjects: List[DOMObject]): List[String] = {
 
@@ -196,7 +188,7 @@ def extractURL(domObjects: List[DOMObject]): List[String] = {
           case "a" =>
             attrs
               .get("href")
-              .map(_.trim)
+              .map(href => decodeHtmlEntities(href.trim))
               .filter(_.nonEmpty)
               .map(link => link :: childResults)
               .getOrElse(childResults)

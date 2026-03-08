@@ -1,33 +1,35 @@
 package crawler.workflows
 
-import crawler.core.{StepResult, Workflow, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition}
+import crawler.core.{StepResult, Workflow, WorkflowStep, WorkflowSuccess, WorkflowTransition}
 import crawler.engine.ExecutionEngine
-import crawler.frontier.{DomainFrontier, DomainPriorityQueue}
+import crawler.frontier.{CrawlQueue, Frontier}
 
 import java.time.LocalDateTime
 
-class DispatchContext(val executionEngine: ExecutionEngine) {
+class DispatchContext(
+  val executionEngine: ExecutionEngine,
+  val frontier: Frontier,
+  val crawlQueue: CrawlQueue
+) {
   var urlList: List[String] = List.empty
 }
 
 case object FetchAllCrawlableURLStep extends WorkflowStep[DispatchContext] {
   override def run(input: DispatchContext): StepResult = {
-    val allPoppableDomains: List[String] = DomainPriorityQueue.popAllCrawlableDomains()
+    val allPoppableDomains: List[String] = input.crawlQueue.popAllCrawlableDomains()
 
     allPoppableDomains.foreach(domain =>
-      DomainPriorityQueue.addDomain(domain, LocalDateTime.now().plusSeconds(10))
+      input.crawlQueue.addDomain(domain, LocalDateTime.now().plusSeconds(10))
     )
 
-    input.urlList = allPoppableDomains.flatMap(domain => DomainFrontier.popURLFromDomain(domain))
+    input.urlList = allPoppableDomains.flatMap(domain => input.frontier.popURLFromDomain(domain))
 
     WorkflowSuccess
   }
 }
 
 case object SubmitNewWorkflowsStep extends WorkflowStep[DispatchContext] {
-  override def run(input: DispatchContext): StepResult = {
-    WorkflowSuccess
-  }
+  override def run(input: DispatchContext): StepResult = WorkflowSuccess
 }
 
 class DispatchCrawlPageWorkflow extends Workflow[DispatchContext] {
