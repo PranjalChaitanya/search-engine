@@ -169,6 +169,14 @@ def normalizeAndFilterURLs(urls: List[String], baseURL: String, store: SeenURLSt
   }
 }
 
+private def decodeHtmlEntities(s: String): String =
+  s.replace("&amp;", "&")
+   .replace("&lt;", "<")
+   .replace("&gt;", ">")
+   .replace("&quot;", "\"")
+   .replace("&apos;", "'")
+   .replace("&#39;", "'")
+
 def extractURL(domObjects: List[DOMObject]): List[String] = {
 
   def loop(nodes: List[DOMObject]): List[String] =
@@ -180,7 +188,7 @@ def extractURL(domObjects: List[DOMObject]): List[String] = {
           case "a" =>
             attrs
               .get("href")
-              .map(_.trim)
+              .map(href => decodeHtmlEntities(href.trim))
               .filter(_.nonEmpty)
               .map(link => link :: childResults)
               .getOrElse(childResults)

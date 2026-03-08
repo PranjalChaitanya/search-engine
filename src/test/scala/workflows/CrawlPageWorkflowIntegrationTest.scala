@@ -8,7 +8,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class CrawlPageWorkflowIntegrationTest extends AnyFlatSpec with Matchers {
-  val url: String = "https://news.ycombinator.com"
+  val url: String = "https://en.wikipedia.org/wiki/Apache_Iceberg"
   val engine: ExecutionEngine = ExecutionEngine(Config.executionEngineExecutorThreads)
   val seenURLs: CrawlURLState = new CrawlURLState()
 

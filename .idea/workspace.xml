@@ -6,19 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4f649b58-19fc-4434-a821-501f4ee9cd44" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainFrontier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainFrontier.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainPriorityQueue.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/frontier/DomainPriorityQueue.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/html/HTMLURLExtractor.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/scheduler/tasks/FrontierCrawlTask.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/scheduler/tasks/FrontierCrawlTask.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/CrawlPageWorkflow.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/DispatchCrawlPageWorkflow.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/DispatchCrawlPageWorkflow.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/CrawlPageWorkflowFactory.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/DispatchCrawlPageWorkflowFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/crawler/workflows/factories/DispatchCrawlPageWorkflowFactory.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/frontier/DomainFrontierTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/frontier/DomainFrontierTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/frontier/DomainPriorityQueueTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/frontier/DomainPriorityQueueTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/html/URLNormalizationSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/html/URLNormalizationSpec.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowIntegrationTest.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/workflows/CrawlPageWorkflowTest.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -313,7 +302,7 @@
       <workItem from="1772481644898" duration="8336000" />
       <workItem from="1772823853302" duration="6560000" />
       <workItem from="1772911040818" duration="836000" />
-      <workItem from="1772925879222" duration="6273000" />
+      <workItem from="1772925879222" duration="7584000" />
     </task>
     <servers />
   </component>
