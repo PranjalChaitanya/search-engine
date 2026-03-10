@@ -21,7 +21,7 @@ class FrontierCrawlTask(
     executeEntireWorkflow(dispatchWorkflowExecution)
 
     dispatchWorkflowExecution.context.urlList.map(url =>
-      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, engine, seenURLs)
+      CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, frontier, crawlQueue, seenURLs)
     )
   }
 }

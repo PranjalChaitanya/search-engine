@@ -3,8 +3,7 @@ package crawler.workflows
 import crawler.core.{StepResult, Workflow, WorkflowStep, WorkflowSuccess, WorkflowTransition}
 import crawler.engine.ExecutionEngine
 import crawler.frontier.{CrawlQueue, Frontier}
-
-import java.time.LocalDateTime
+import crawler.politeness.PolitenessManager
 
 class DispatchContext(
   val executionEngine: ExecutionEngine,
@@ -18,9 +17,10 @@ case object FetchAllCrawlableURLStep extends WorkflowStep[DispatchContext] {
   override def run(input: DispatchContext): StepResult = {
     val allPoppableDomains: List[String] = input.crawlQueue.popAllCrawlableDomains()
 
-    allPoppableDomains.foreach(domain =>
-      input.crawlQueue.addDomain(domain, LocalDateTime.now().plusSeconds(10))
-    )
+    allPoppableDomains.foreach { domain =>
+      PolitenessManager.recordVisit(domain)
+      input.crawlQueue.addDomain(domain, PolitenessManager.nextAllowedCrawlTime(domain))
+    }
 
     input.urlList = allPoppableDomains.flatMap(domain => input.frontier.popURLFromDomain(domain))
 

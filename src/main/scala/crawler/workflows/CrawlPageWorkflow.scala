@@ -1,16 +1,17 @@
 package crawler.workflows
 
-import crawler.core.{Logger, StepResult, Workflow, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition, executeEntireWorkflow}
-import crawler.engine.ExecutionEngine
-import crawler.html.{DOMObject, SeenURLStore, CrawlURLState, extractURL, markURLAsSeen, normalizeAndFilterURLs, parseHTML}
+import crawler.core.{Logger, StepResult, Workflow, WorkflowFailure, WorkflowStep, WorkflowSuccess, WorkflowTransition}
+import crawler.frontier.{CrawlQueue, Frontier}
+import crawler.html.{DOMObject, SeenURLStore, extractRootURL, extractURL, markURLAsSeen, normalizeAndFilterURLs, parseHTML}
+import crawler.politeness.PolitenessManager
 import crawler.scraper.scrapeWebpage
-import crawler.workflows.factories.CrawlPageWorkflowFactory
 
 import java.util.UUID
 
 class CrawlPageContext(
   val webpageUrl: String,
-  val executionEngine: ExecutionEngine,
+  val frontier: Frontier,
+  val crawlQueue: CrawlQueue,
   val seenURLs: SeenURLStore
 ) {
   val loggingUUID: String = UUID.randomUUID().toString
@@ -62,18 +63,18 @@ case object ExtractURLStep extends WorkflowStep[CrawlPageContext] {
   }
 }
 
-case object SubmitNewJobsStep extends WorkflowStep[CrawlPageContext] {
+case object AddURLsToFrontierStep extends WorkflowStep[CrawlPageContext] {
   override def run(input: CrawlPageContext): StepResult = {
     input.extractedUrls match {
       case None => WorkflowFailure
       case Some(urls) =>
         val normalizedURLs = normalizeAndFilterURLs(urls, input.webpageUrl, input.seenURLs)
         Logger.log(s"Workflow UUID ${input.loggingUUID}: New list of normalized urls: ${normalizedURLs.toString()}")
-        normalizedURLs.foreach(url =>
-          input.executionEngine.submitJob(
-            CrawlPageWorkflowFactory.createCrawlPageWorkflowExecutionCallback(url, input.executionEngine, input.seenURLs)
-          )
-        )
+        normalizedURLs.foreach { url =>
+          val domain = extractRootURL(url)
+          input.frontier.addURLToDomain(url, domain)
+          input.crawlQueue.addDomain(domain, PolitenessManager.nextAllowedCrawlTime(domain))
+        }
         WorkflowSuccess
     }
   }
@@ -83,9 +84,9 @@ class CrawlPageWorkflow extends Workflow[CrawlPageContext] {
   override val startingStep: WorkflowStep[CrawlPageContext] = FetchWebpageStep
 
   override val transitions: Map[WorkflowStep[CrawlPageContext], WorkflowTransition[CrawlPageContext]] = Map(
-    FetchWebpageStep  -> WorkflowTransition(Some(ParseWebpageStep),None),
-    ParseWebpageStep  -> WorkflowTransition(Some(ExtractURLStep), None),
-    ExtractURLStep    -> WorkflowTransition(Some(SubmitNewJobsStep), None),
-    SubmitNewJobsStep -> WorkflowTransition(None, None)
+    FetchWebpageStep      -> WorkflowTransition(Some(ParseWebpageStep), None),
+    ParseWebpageStep      -> WorkflowTransition(Some(ExtractURLStep), None),
+    ExtractURLStep        -> WorkflowTransition(Some(AddURLsToFrontierStep), None),
+    AddURLsToFrontierStep -> WorkflowTransition(None, None)
   )
 }
