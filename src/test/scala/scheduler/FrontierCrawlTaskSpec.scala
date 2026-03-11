@@ -1,6 +1,6 @@
 package scheduler
 
-import crawler.engine.ExecutionEngine
+import crawler.engine.{ExecutionEngine, Priority}
 import crawler.frontier.{CrawlQueue, Frontier}
 import crawler.html.CrawlURLState
 import crawler.scheduler.tasks.FrontierCrawlTask
@@ -30,10 +30,10 @@ class FrontierCrawlTaskSpec extends AnyFlatSpec with Matchers {
     def containsDomain(domain: String): Boolean = false
   }
 
-  class CapturingEngine extends ExecutionEngine(0) {
+  class CapturingEngine extends ExecutionEngine(1, 1) {
     val submitted: scala.collection.mutable.ListBuffer[() => Unit] =
       scala.collection.mutable.ListBuffer.empty
-    override def submitJob(job: () => Unit): Unit = submitted += job
+    override def submitJob(job: () => Unit, priority: Priority = Priority.NORMAL): Unit = submitted += job
   }
 
   it should "return one callback per crawlable URL" in {

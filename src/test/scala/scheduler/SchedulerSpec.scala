@@ -1,6 +1,6 @@
 package scheduler
 
-import crawler.engine.ExecutionEngine
+import crawler.engine.{ExecutionEngine, Priority}
 import crawler.scheduler.{ScheduledTask, Scheduler}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -14,15 +14,15 @@ class SchedulerSpec extends AnyFlatSpec with Matchers {
   }
 
   // Captures submitted jobs without running them
-  class CapturingEngine extends ExecutionEngine(0) {
+  class CapturingEngine extends ExecutionEngine(1, 1) {
     val submitted = scala.collection.mutable.ListBuffer.empty[() => Unit]
-    override def submitJob(job: () => Unit): Unit = submitted += job
+    override def submitJob(job: () => Unit, priority: Priority = Priority.NORMAL): Unit = submitted += job
   }
 
   // Runs a single tick rather than starting the thread
   def tick(scheduler: Scheduler): Unit = {
     scheduler.scheduledTaskList.foreach(task =>
-      task.getTasks().foreach(scheduler.executionEngine.submitJob)
+      task.getTasks().foreach(job => scheduler.executionEngine.submitJob(job, task.priority))
     )
   }
 

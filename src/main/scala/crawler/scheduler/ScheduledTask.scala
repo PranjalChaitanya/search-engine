@@ -1,5 +1,8 @@
 package crawler.scheduler
 
+import crawler.engine.Priority
+
 trait ScheduledTask {
-  def getTasks() : List[() => Unit]
+  def priority: Priority = Priority.NORMAL
+  def getTasks(): List[() => Unit]
 }

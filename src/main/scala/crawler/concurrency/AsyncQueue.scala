@@ -10,14 +10,11 @@ class AsyncQueue[A] {
   private val waiters : Queue[(() => Unit)] = new mutable.Queue[() => Unit]()
   private val lock = new AnyRef
 
-  def push(item : A): Unit = lock.synchronized {
-    items.enqueue(item)
-    var waker: Option[(() => Unit)] = None
-
-    if(waiters.nonEmpty) {
-      waker = Some(waiters.dequeue())
+  def push(item : A): Unit = {
+    val waker = lock.synchronized {
+      items.enqueue(item)
+      if (waiters.nonEmpty) Some(waiters.dequeue()) else None
     }
-
     waker.foreach(_())
   }
 

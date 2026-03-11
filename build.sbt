@@ -8,5 +8,6 @@ libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.11.3" // Use the latest ve
 
 lazy val root = (project in file("."))
   .settings(
-    name := "search-engine"
+    name := "search-engine",
+    Test / testOptions += Tests.Argument("-l", "IntegrationTest")
   )

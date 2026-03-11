@@ -13,7 +13,7 @@ object Main {
     val frontier   = new DomainFrontier()
     val crawlQueue = new DomainPriorityQueue()
     val seenURLs   = new CrawlURLState()
-    val engine     = new ExecutionEngine(Config.executionEngineExecutorThreads)
+    val engine     = new ExecutionEngine(Config.executionEngineNormalThreads, Config.executionEngineUrgentThreads)
 
     val seedUrl = "https://en.wikipedia.org/wiki/Apache_Iceberg"
     val domain  = extractRootURL(seedUrl)

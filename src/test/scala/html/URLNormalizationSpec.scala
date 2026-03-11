@@ -67,7 +67,7 @@ class URLNormalizationSpec extends AnyFlatSpec with Matchers {
         "#section",             // filtered
         "javascript:void(0)",   // filtered
         s"https://EXAMPLE.com/root/$unique/contact#top",
-        "https://example.com/root/$unique/contact", // duplicate canonical
+        s"https://example.com/root/$unique/contact", // duplicate canonical
         "mailto:test@example.com",                  // filtered
         "https://another.example.org/path"
       ),
