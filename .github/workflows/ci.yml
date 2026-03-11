@@ -19,5 +19,10 @@ jobs:
           java-version: 17
           cache: sbt
 
+      - name: Install sbt
+        run: |
+          curl -fL https://github.com/sbt/sbt/releases/download/v1.12.1/sbt-1.12.1.tgz | tar xz
+          echo "$GITHUB_WORKSPACE/sbt/bin" >> $GITHUB_PATH
+
       - name: Run tests
         run: sbt test
